@@ -123,7 +123,7 @@ In general, an \textit{attacker} seeks to maximize the loss against a given mode
 % % Attack Example
 \begin{figure}[!ht]
     {\centering
-    \includegraphics[width=.225\textwidth]{Fig1.eps}
+    \includegraphics[width=.225\textwidth]{Fig1.pdf}
     \caption{A `7' perturbed with adversarial noise such that the model perceives it to be a `2.'}
     \label{fig:attack}
     } % end centering
@@ -133,7 +133,7 @@ In general, an \textit{attacker} seeks to maximize the loss against a given mode
 \paragraph{Attack Distance}
 \begin{figure*}[!ht]
     {\centering
-    \includegraphics[,clip,width=0.9\textwidth]{Fig2.eps}
+    \includegraphics[,clip,width=0.9\textwidth]{Fig2.pdf}
     \caption{Orange (class 0) points, blue (class 1) points, and red (adversarial) points in a contour map for a radial basis function support vector classifier. The contours reflect the confidence levels for a given sample and class. The bright yellow regions indicate areas of strong positive confidence and the purple areas indicate strong negative classification, and grey represents an uncertain classification. As we can see, it is rather trivial to shift the classification of a given sample \cm{towards} the ambiguous regions (teal colored).}
     \label{fig:shift}
     } % end centering
@@ -167,7 +167,7 @@ The attacks outlined above are capable of breaking state of the art image recogn
 % % TODO: Figure
 % \begin{figure}
 %     \centering
-%     \includegraphics[width=.4\textwidth]{accuracy_plot.eps}
+%     \includegraphics[width=.4\textwidth]{accuracy_plot.pdf}
 %     \caption{This figure shows how the critical adversarial distance (y-axis) varies with respect to the accuracy for MNIST (solid) and CIFAR-10 (dotted). TODO}
 %     \label{fig:dohmatob}
 % \end{figure}
@@ -397,24 +397,24 @@ To aid the reader, we have visualized a single attack sample for each attack on 
 \label{samples}
 \begin{figure*}[]
     %\begin{subfigure}
-          \includegraphics[,clip,width=0.9\textwidth]{Fig3.eps}
+          \includegraphics[,clip,width=0.9\textwidth]{Fig3.pdf}
         \caption{ \cm{ The Fast Gradient Method (FGM) doesn't enforce any kind of feasibility criteria, resulting in salt-and-pepper noise as the $\ell_2$ approaches the standard deviation of the normally distributed dataset.}}
         \label{fig:FGM}
      %\end{subfigure}
      %\begin{subfigure}
-          \includegraphics[,clip,width=0.9\textwidth]{Fig4.eps}
+          \includegraphics[,clip,width=0.9\textwidth]{Fig4.pdf}
         \caption{ \cm{The Projected Gradient Descent Attack (PGD) projects the adversarial example back onto a sphere of a fixed radius, yielding noise that more closely approximates handwritten digits.}}
         \label{fig:PGD}
      %\end{subfigure}
      %\begin{subfigure}
-          \includegraphics[,clip,width=0.9\textwidth]{Fig5.eps}
+          \includegraphics[,clip,width=0.9\textwidth]{Fig5.pdf}
         \caption{ \cm{The Carlini-Wagner $\ell_{\infty}$ method includes an added confidence constraint that only returns an adversarial example $\iff L(x^{s+1}) - L(x) \geq C$. Depicted here is the unperturbed 7 because this method was unable to find an adversarial example for these constraints. Despite this, we can see that for 10\% of the samples are consistently misclassified with a high degree of false confidence. 
         }
         }
         \label{fig:CW}
      %\end{subfigure}
      %\begin{subfigure}
-          \includegraphics[,clip,width=0.9\textwidth]{Fig6.eps}
+          \includegraphics[,clip,width=0.9\textwidth]{Fig6.pdf}
         \caption{\cm{The DeepFool Method, rather than constraining perturbations to an $\epsilon$-sphere around the sample, finds perturbations that extend beyond the approximated boundary by a distance of at least $\epsilon$. Regardless of the distance constraint, DeepFool is very effective.}}
         \label{fig:Deep}
      %\end{subfigure}
@@ -423,22 +423,22 @@ To aid the reader, we have visualized a single attack sample for each attack on 
 
 \begin{figure*}[] 
     %\begin{subfigure}
-          \includegraphics[,clip,width=0.9\textwidth]{Fig7.eps}
+          \includegraphics[,clip,width=0.9\textwidth]{Fig7.pdf}
         \caption{ \cm{The Pixel Attack (Pixel) seeks to maximize the loss while minimizing the number of perturbed pixels. Here we see that even a small  perturbation in original image can lead nevertheless consistently induce failures.  Here, $\epsilon_0$ denotes the ratio of perturbed pixels to the total.}}
         \label{fig:Pixel}
      %\end{subfigure}
      %\begin{subfigure}
-          \includegraphics[,clip,width=0.9\textwidth]{Fig8.eps}
+          \includegraphics[,clip,width=0.9\textwidth]{Fig8.pdf}
         \caption{ \cm{Rather than minimizing the number of pixels, the Threshold Attack (Thresh) optimizes for the smallest perturbation possible. Here, $\epsilon_{\infty}$ denotes the ratio of the applied to noise to the maximum possible value (255).}}
         \label{fig:Thresh}
      %\end{subfigure}
      %\begin{subfigure}
-          \includegraphics[,clip,width=0.9\textwidth]{Fig9.eps}
+          \includegraphics[,clip,width=0.9\textwidth]{Fig9.pdf}
         \caption{ \cm{ This is one of the two most dangerous attacks as it can consistently find image patches (the noisy circle depicted above) from only a small number of samples ($n=100$) that can often fool the classifier, regardless of original image or class. Obviously, as we replace all of the pixels with adversarial noise, the classifier becomes mostly useless, but this attack is still concerningly effective when only a fraction of the image has the adversarial noise. Here, $\epsilon_0$ denotes the ratio of perturbed pixels to the total.}}
         \label{fig:Patch}
      %\end{subfigure}
      %\begin{subfigure}
-          \includegraphics[,clip,width=0.9\textwidth]{Fig10.eps}
+          \includegraphics[,clip,width=0.9\textwidth]{Fig10.pdf}
         \caption{ \cm{The Hop Skip Jump Attack (HSJ) uses a second-order approximation of the classification boundary in an offline manner to find adversarial examples that first maximize loss then minimize for perturbation distance. This attack is uniquely concerning because it 1) works on any model and 2) is surprisingly effective even when our attacker is restricted to a small number of queries per batch (here, denoted as $Q$).}}
         \label{fig:HSJ}
      %\end{subfigure}
@@ -549,7 +549,7 @@ In this study, we evaluated the accuracy (see: Sec.~\ref{eq:accuracy}) and the f
 %% Adv Accuracy Grid
 \begin{figure*}[!ht]
     {\centering
-    \includegraphics[trim={0 0.85em 0 0.4em},clip,width=0.7\textwidth]{Fig11.eps}
+    \includegraphics[trim={0 0.85em 0 0.4em},clip,width=0.7\textwidth]{Fig11.pdf}
     \caption{The percent change in adversarial accuracy of each attack against each defense for CIFAR-10. As we can plainly see, no defense was able to improve the failure rate across all tested attacks. Red indicates that defense made a model worse. Blue indicates an improvement. White indicates no change.}
     \label{fig:adv_acc_grid}
     } % end centering
@@ -572,7 +572,7 @@ Equation 2 (failure rate) in both the benign context. Each model was attacked us
 % % Accuracy across defenses and attacks
 \begin{figure*}[!hptb]
     {\centering
-    \includegraphics[trim={0 0.85em 0 0.4em},clip,width=0.9\textwidth]{Fig12.eps}
+    \includegraphics[trim={0 0.85em 0 0.4em},clip,width=0.9\textwidth]{Fig12.pdf}
     \vspace{-1em}
     \caption{The 95\% confidence interval of adversarial (red) and benign (blue) accuracies for each defense (left) and each attack (right) for CIFAR-10. One trial was conducted for each hyper-parameter combination, and the confidence interval spans these trials.}
     \label{fig:acc}
@@ -590,7 +590,7 @@ Figure~\ref{fig:acc} (left subplot) depicts the 95\% confidence region of advers
 %% Fit and pred time across defenses and attacks
 \begin{figure*}[!hptb]
     {\centering
-    \includegraphics[trim={0 0.85em 0 0.35em},clip,width=0.9\textwidth]{Fig13.eps}
+    \includegraphics[trim={0 0.85em 0 0.35em},clip,width=0.9\textwidth]{Fig13.pdf}
     \vspace{-1em}
     \caption{The 95\% confidence interval of prediction times (blue) and attack times (red) for CIFAR-10, broken down by defense (left) and attack (right). One trial is depicted for each hyper-parameter combination. Accuracy on the benign (unperturbed) dataset is depicted in blue and accuracy on the adversarial (perturbed) dataset is depicted in red.}
     \label{fig:time}
@@ -599,7 +599,7 @@ Figure~\ref{fig:acc} (left subplot) depicts the 95\% confidence region of advers
 
 \begin{figure*}[!hptb]
     {\centering
-    \includegraphics[width=0.9\textwidth]{Fig14.eps}
+    \includegraphics[width=0.9\textwidth]{Fig14.pdf}
     \vspace{-1em}
     \caption{The 95\% confidence interval of failure rates both benign (blue) and adversarial (red) for CIFAR-10, broken down by defense (left) and attack (right). This was computed using Equation~\ref{eq:failure_rate}. The failure rate of the benign (unperturbed) dataset is depicted in blue and the failure rate of the adversarial (perturbed) dataset is depicted in red.}
     \label{fig:failure_rate}
@@ -617,7 +617,7 @@ When we combine the information from the accuracy and time graphs in Equation~\r
 %% Rate
 \begin{figure*}[!hptb]
     {\centering
-    \includegraphics[trim={0 0.85em 0 0.35em},clip,height=0.6\textwidth]{Fig15.eps}
+    \includegraphics[trim={0 0.85em 0 0.35em},clip,height=0.6\textwidth]{Fig15.pdf}
     \vspace{-0.75em}
     \caption{The adversarial failure rate for all attacks and defenses for CIFAR-10. Darker red means worse performance and white indicates that no adversarial \cm{samples} were found. This result is rather pessimistic, suggesting that all configurations fail to meet industrial standards.}
     \label{fig:rate_grid}
@@ -641,7 +641,7 @@ Figure~\ref{fig:adv_acc_grid} demonstrates how each attack fares against each de
 %% Change Grid
 \begin{figure*}[!hptb]
     {\centering
-    \includegraphics[trim={0 0.85em 0 0.35em},clip,height=0.6\textwidth]{Fig16.eps}
+    \includegraphics[trim={0 0.85em 0 0.35em},clip,height=0.6\textwidth]{Fig16.pdf}
     \vspace{-0.75em}
     \caption{The relative change in failure rate for the adversarial case, centered at the benign failure rate for CIFAR-10. Blue indicates an improvement relative to the benign (unperturbed) case. Red indicates a worsening of performance in the adversarial case compared to the benign case. White indicates no change. Note that the scale is logarithmic so that marginal gains and substantial losses can be seen clearly.}
     \label{fig:change_grid}
@@ -652,7 +652,7 @@ Figure~\ref{fig:adv_acc_grid} demonstrates how each attack fares against each de
 % % Accuracy across defenses and attacks
 \begin{figure*}[!htbp]
     {\centering
-    \includegraphics[trim={0 0.85em 0 0.5em},clip,width=0.9\textwidth]{Fig17.eps}
+    \includegraphics[trim={0 0.85em 0 0.5em},clip,width=0.9\textwidth]{Fig17.pdf}
     \vspace{-1em}
     \caption{The 95\% confidence interval of adversarial and benign accuracies for each defense (left) and each attack (right) on the MNIST dataset, broken down by defense (left) and attack (right). One trial was conducted for each hyper-parameter combination.}
     \label{fig:mnist_acc}
@@ -664,7 +664,7 @@ Figure~\ref{fig:adv_acc_grid} demonstrates how each attack fares against each de
 %% Adv Accuracy Grid
 \begin{figure*}[!htbp]
     {\centering
-    \includegraphics[trim={0 0.85em 0 0.35em},clip,height=0.58\textwidth]{Fig18.eps}
+    \includegraphics[trim={0 0.85em 0 0.35em},clip,height=0.58\textwidth]{Fig18.pdf}
     \vspace{-0.5em}
     \caption{The adversarial accuracy of each attack against each defense on the MNIST dataset. Blue would indicate an improvement relative to the undefended model. Red indicates that defense made a model worse. White indicates no change. This was computed using Equation~\ref{eq:percent_change_acc}.}
     \label{fig:mnist_adv_acc_grid}
@@ -682,7 +682,7 @@ In addition to running these experiments on the CIFAR-10 dataset, we also ran th
  %% Fit and pred time across defenses and attacks
 \begin{figure*}[!hptb]
     {\centering
-    \includegraphics[trim={0 0.85em 0 0.35em},clip,width=0.9\textwidth]{Fig19.eps}
+    \includegraphics[trim={0 0.85em 0 0.35em},clip,width=0.9\textwidth]{Fig19.pdf}
     \vspace{-1em}
     \caption{The 95\% confidence interval of prediction times (blue) and attack times (red) on the MNIST dataset, broken down by defense (left) and attack (right). Note that adversarial times are identical in each image since fitting and predicting are the same step in this case. One trial is depicted for each hyper-parameter combination.}
     \label{fig:mnist_time}
@@ -692,7 +692,7 @@ In addition to running these experiments on the CIFAR-10 dataset, we also ran th
 %% Failure rate across defenses and attacks
 \begin{figure*}[!hptb]
     {\centering
-    \includegraphics[trim={0 0.85em 0 0.35em},clip,width=0.9\textwidth]{Fig20.eps}
+    \includegraphics[trim={0 0.85em 0 0.35em},clip,width=0.9\textwidth]{Fig20.pdf}
     \vspace{-1em}
     \caption{The 95\% confidence interval of failure rates, both benign (blue) and adversarial (red) on the MNIST dataset, broken down by defense (left) and attack (right). Note that no defense was able to improve upon the benign failure rate. This was computed using Equation~\ref{eq:failure_rate}.}
     \label{fig:mnist_failure_rate}
@@ -703,7 +703,7 @@ In addition to running these experiments on the CIFAR-10 dataset, we also ran th
 %% Rate Grid
 \begin{figure*}[!hptb]
     {\centering
-    \includegraphics[trim={0 0.85em 0 0.35em},clip,height=0.6\textwidth]{Fig21.eps}
+    \includegraphics[trim={0 0.85em 0 0.35em},clip,height=0.6\textwidth]{Fig21.pdf}
     \vspace{-0.5em}
     \caption{The failure rate for the adversarial case on the MNIST dataset. A darker red indicates a worse performance and white indicates 0 induced failures. Note that the scale is logarithmic so that marginal gains and substantial losses can be seen clearly. White indicates cases where the attack was never successful.}
     \label{fig:mnist_rate_grid}
@@ -713,7 +713,7 @@ In addition to running these experiments on the CIFAR-10 dataset, we also ran th
 %% Change Grid
 \begin{figure*}[!hptb]
     {\centering
-    \includegraphics[trim={0 0.85em 0 0.35em},clip,height=0.6\textwidth]{Fig22.eps}
+    \includegraphics[trim={0 0.85em 0 0.35em},clip,height=0.6\textwidth]{Fig22.pdf}
     \vspace{-0.5em}
     \caption{The change in failure rate between the benign and adversarial cases on the MNIST dataset. Blue indicates an improvement relative to the undefended model. Red indicates that defense made a model worse. White indicates no change. Note that the scale is logarithmic so that marginal gains and substantial losses can be seen clearly. This was computed using Equation~\ref{eq:relative_change_failure_rate}.}
     \label{fig:mnist_change_grid}

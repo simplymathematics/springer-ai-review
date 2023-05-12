@@ -133,4 +133,4 @@ for key in res:
     fig.set_dpi(1000)
     fig.suptitle(title, y =.90)
     fig.tight_layout()
-    fig.savefig(f"{data}/{key}.eps", format="eps", dpi=1000)
+    fig.savefig(f"{data}/{key}.pdf", format="pdf", dpi=1000)

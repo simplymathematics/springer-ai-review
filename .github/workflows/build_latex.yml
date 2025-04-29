@@ -16,4 +16,5 @@ jobs:
         with:
           name: survey.pdf
           path: main.pdf
+          overwrite: true
         continue-on-error: true

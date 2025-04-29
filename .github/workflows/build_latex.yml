@@ -14,6 +14,6 @@ jobs:
       - name: Upload PDF file
         uses: actions/upload-artifact@v4
         with:
-          name: PDF
+          name: survey.pdf
           path: main.pdf
         continue-on-error: true

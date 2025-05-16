@@ -28,9 +28,6 @@
 \DeclareMathOperator*{\minimise}{\textrm{minimise}}
 \DeclareMathOperator*{\maximise}{\textrm{maximise}}
 
-\newcommand{\tl}[1]{\textit{[{\color{red}#1}]}}
-\newcommand{\cm}[1]{#1}
-\newcommand{\erik}[1]{\textit{[{\color{brown}Erik: #1}]}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % \usepackage{itemize}
@@ -222,7 +219,7 @@ Like in cryptography, the fundamental limit for an adversary has to do with comp
 
 The following section outlines a variety of attacks, broken into three categories: gradient-based attacks, gradient approximating attacks, and universal attacks. For the sake of the reader, a collection of generated adversarial samples follows the mathematical descriptions in the subsection following the aforementioned trio (see:~Sec.~\ref{samples}).
 
-\subsection{Gradient-Based Attacks}}
+\subsection{Gradient-Based Attacks}
 
 The seminal work on adversarial attacks in the context of modern neural networks was written by Madry~et~al.~\cite{madry2017towards} and an important follow up work was written by Carlini~and~Wagner~\cite{carlini_towards_2017}. Both operate under the condition that the attacked model has a gradient that is known to the attacker. Each of these can be considered \textit{white-box} attacks because they are given access to the model output and the model gradient. 
 

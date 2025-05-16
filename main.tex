@@ -218,23 +218,23 @@ The accuracy is defined as
 \end{equation}
 where \textit{Total} is the number of tested samples, \textit{False Classifications} refers to the number of objects that were incorrectly categorized by a given model[, and $\eta$ is the generalised error rate.
 In practice, $\eta$ is generally assumed to be the accuracy on a `test set', with samples from a distribution assumed to be identical to the training set.
-Elsewhere, we refer to this `test set' accuracy as the 'benign' accuracy or with the subscript `ben.' such that the test accuracy is $\eta_{ben.}$.
+Elsewhere, we refer to this `test set' accuracy as the `benign' accuracy or with the subscript `ben.' such that the test accuracy is $\eta_{ben.}$.
 In addition to this metric, we include metrics for a variety of signal processing techniques (see: Section~\ref{defences}) where the unaltered signal is designated as `control'.
 Finally, we include many sets of test sets specifically crafted to be `adversarial' (see: Section~\ref{attacks}), which are denoted with the subscript `adv.'.
 
 However, due to the large number of samples required by regulatory standards  and the strenuous testing requirements of safety-critical software (see Section~\ref{safety-critical}), these evaluations become an infeasible way to verify that a model only fails once across the required number of samples (see Table~\ref{tab:rate}), especially if we would like to be highly confident of that estimation.
 
-\begin{table}[!ht]
+\begin{table}[!ht] % noqa 9
     \begin{center}
         \caption{Acceptable Failure Rates for different SIL levels in which a single death is possible, measured in failures per second.}
-        \begin{tabular}{l c cc}
+        \begin{tabular}{l c cc} % noqa 9
             \toprule
             SIL  && On-demand Operation   & Continuous Operation \\
             \cmidrule{1-1} \cmidrule{3-4}
-            I     && $[10^{-6}, 10^{-5})$  & $[10^{-10}, 10^{-9})$ \\
-            II    && $[10^{-7}, 10^{-6})$  & $[10^{-11}, 10^{-10})$ \\
-            III   && $[10^{-8}, 10^{-7})$  & $[10^{-12}, 10^{-11})$ \\
-            IV    && $[10^{-9}, 10^{-8})$  & $[10^{-13}, 10^{-12})$ \\
+            I     && $[10^{-6}, 10^{-5})$  & $[10^{-10}, 10^{-9})$ \\ % noqa 9
+            II    && $[10^{-7}, 10^{-6})$  & $[10^{-11}, 10^{-10})$ \\ % noqa 9
+            III   && $[10^{-8}, 10^{-7})$  & $[10^{-12}, 10^{-11})$ \\ % noqa 9
+            IV    && $[10^{-9}, 10^{-8})$  & $[10^{-13}, 10^{-12})$ \\ % noqa 9
             \bottomrule
         \end{tabular}
         \label{tab:rate}
@@ -557,7 +557,7 @@ Thus, we tested several combinations of the noise level (denoted `prob),  enumer
 Adversarial retraining (Retrain) is a method proposed by Croce \textit{et al.}~\cite{tsipras_robustness_2019}, that appends adversarial examples to the training set, labels them `adversarial' and trains a classifier on the new (larger) dataset.
 The first problem with this method is that the training time increases linearly with the number of re-training epochs, with twenty retraining cycles being recommended in the original paper.
 Furthermore, `adversarial re-training' must be conducted against each type of attack individually since the topological characteristics of attacks vary widely.
-An extension seeks to encode ambiguity between an adversarial example and both the original and target class, called `confidence-calibration'~\cite{croce_reliable_2020} by changing the class label from an integer to a float that decays with distance from the 'true' image.
+An extension seeks to encode ambiguity between an adversarial example and both the original and target class, called `confidence-calibration'~\cite{croce_reliable_2020} by changing the class label from an integer to a float that decays with distance from the `true' image.
 While it offers improved results over other types of adversarial re-training, it optimises against a particular type of failure which inherently degrades performance against others~\cite{carlini_towards_2017}.
 
 \subsubsection{Post-processing}
@@ -583,7 +583,7 @@ To simulate scenarios in which low-confidence classifications are merely ignored
 Instead of obscuring the output data with noise or only reporting highly confident answers, this method (Rounded) merely reduces the bit depth of all the reported confidence levels~\cite{discretization}.
 Instead of a 64-bit output vector, this might be reduced to an 8-bit vector reducing the effective attack query rate by a factor of four.
 However, this harms the legitimate user by the same degree by reducing the precision of their queries as well.
-For our study, we used several different numbers of decimals, reflecting the number of base 10 digits in the set $[0,1]$ revealed by the API.
+For our study, we used several different numbers of decimals, reflecting the number of base 10 digits in the set $[0,1]$ revealed by the API\@.
 enumerated in Figures~\ref{fig:adv_acc_grid}~and~\ref{fig:mnist_adv_acc_grid}.
 
 
@@ -849,7 +849,7 @@ In addition to running these experiments on the CIFAR-10 dataset, we also ran th
 Figure~\ref{fig:mnist_acc} broadly verifies the behavior observed above on the CIFAR-10, wherein defences tend to reduce model accuracy on the benign set, gradient-based attack efficacy is largely determined by hyperparameter tuning, and non-gradient-based attacks are still very effective.
 As with CIFAR-10, no defence was able to improve the benign (unperturbed) accuracy of the undefended model for every attack (see: Figure~\ref{fig:mnist_adv_acc_grid}).
 Despite a smaller model and lower run-time requirements (compare Figure~\ref{fig:mnist_time} to Figure~\ref{fig:time}), we see that training time is more-or-less the same.
-When we compare Figure \ref{fig:rate_grid} with Figure \ref{fig:mnist_rate_grid}, we see that some of the defences were much more effective at preventing gradient-descent attacks.
+When we compare Figure~\ref{fig:rate_grid} with Figure~\ref{fig:mnist_rate_grid}, we see that some of the defences were much more effective at preventing gradient-descent attacks.
 However, they failed against the more computational expensive techniques of Patch, HSJ, and Deep.
 Then, when we examine failure rate (Figure~\ref{fig:mnist_failure_rate}), we see that despite being a different dataset and model architecture, we are still able to induce failures in only a few seconds, as with CIFAR-10.
 However, when we break this rate down into each attack and defence combination and measure a change in the failure rate (see: Figure~\ref{fig:mnist_change_grid}), there seems to be a fairly consistent and marginal improvement driven by time (see: Figure~\ref{fig:mnist_time}) rather than accuracy (see:  Figure~\ref{fig:mnist_acc}), as with CIFAR-10.
@@ -962,9 +962,9 @@ Furthermore, even when we obscure everything from the user except model output, 
 We found that adding Gaussian noise to the model outputs or training images, reducing the bit-depth of the numerical calculations to match the precision of the image, and setting a confidence threshold were marginally effective defences when compared to the control model.
 However, none of these defences reach the regulatory standards required for safety-critical systems---in fact, they fail by several orders of magnitude.
 Furthermore, any gains seen in the failure rate (Figure~\ref{fig:change_grid}) are inconsistent while universally reducing the accuracy on the original (unperturbed/benign) data (Figure~\ref{fig:adv_acc_grid}).
-Improvements due to the defences are rare and marginal, and they consistently make benign performance worse (see Figures~\ref{fig:adv_acc_grid} and \ref{fig:mnist_adv_acc_grid}).
+Improvements due to the defences are rare and marginal, and they consistently make benign performance worse (see Figures~\ref{fig:adv_acc_grid} and~\ref{fig:mnist_adv_acc_grid}).
 We find this to be true across both datasets and model architectures.
-Since we know that model accuracy scales with $\mathcal{O}(1/\sqrt{n})$~\cite{vapnik1994measuring} and attacks seem to run in constant time (see Figures~\ref{fig:time} and \ref{fig:mnist_time}) for a fixed computational and query budgets of a few seconds and 1000 queries respectively.
+Since we know that model accuracy scales with $\mathcal{O}(1/\sqrt{n})$~\cite{vapnik1994measuring} and attacks seem to run in constant time (see Figures~\ref{fig:time} and~\ref{fig:mnist_time}) for a fixed computational and query budgets of a few seconds and 1000 queries respectively.
 
 Finally, due to the rate at which we can generate feasible misclassifications, we must question the real-world efficacy of any system that relies on these models to make predictions that meet the legal standards that define `safe'.
 Despite this pessimism, adversarial model analysis proves to be a computationally efficient way to analyse and compare the out-of-distribution robustness of model architectures without the need to generate massive test sets from real world data.

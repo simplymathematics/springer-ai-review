@@ -6,8 +6,8 @@
 \newtheorem{lemma}{Lemma}
 \newcommand{\Ie}{\textit{I.e.}\xspace}
 \newcommand{\ie}{\textit{i.e.}\xspace}
-\newcommand{\Eg}{\textit{E.g.}\xspace}
-\newcommand{\eg}{\textit{e.g.}\xspace}
+\newcommand{\Eg}{\texit{e.g.}\xspace}
+\newcommand{\eg}{\texit{e.g.}\xspace}
 \newcommand{\probP}{\text{I\kern-0.15em P}}
 
 \DeclareMathOperator*{\minimise}{\textrm{minimise}}
@@ -357,7 +357,7 @@ where $r$ is the perturbation and $\epsilon$ is the perturbation distance in pix
 This attack uses differential evolution to simultaneously optimise for both loss and the number of perturbations.
 In our case, we limited this to a single perturbation, but did not restrict epsilon beyond the normal $[0, 255]$ range.
 Since perturbation distance for a single pixel is not restricted, we restricted the number of distorted pixels to one of these: $[1,2,4,8, 16]$.
-Unlike the aforementioned gradient-based attacks, this method generalises to classification systems that lack gradients (\textit{e.g.}, decision trees).
+Unlike the aforementioned gradient-based attacks, this method generalises to classification systems that lack gradients (\texit{e.g.}, decision trees).
 This differs from the the \textit{Threshold} and \textit{Adversarial Patch} attack below by optimising for the fewest number of changed pixels ($\ell_0$ norm) rather than the perturbation distance ($\ell_2$ or $\ell_{\infty}$).
 
 \subsubsection{Threshold}
@@ -369,7 +369,7 @@ $$
     x^{(s+1)} = \argmax_r \, L\big(y, K(x^{(s)} + r)\big) \text{~~subject~to~~}  \|r\|_{\infty} \leq \epsilon
 $$
 where $\epsilon$ is the targeted perturbation threshold of .03.
-Unlike the aforementioned gradient-based attacks, this method generalises to classification systems that lack gradients (\textit{e.g.}, decision trees).
+Unlike the aforementioned gradient-based attacks, this method generalises to classification systems that lack gradients (\texit{e.g.}, decision trees).
 This differs from the the \textit{Few-Pixel} and \textit{Adversarial Patch} attack below by optimising for largest change in loss ($\ell_{1}$ norm) rather than fewest number of pixels ($\ell_{0}$ norm) or the perturbation distance ($\ell_2$ or $\ell_{\infty}$).
 
 \subsection{Universal Attacks}
@@ -390,7 +390,7 @@ However, instead of optimising for a threshold or confidence level, it seeks to 
 This single generated image patch is added to each image and is intended to cause a generic misclassification, regardless of the original class.
 We know that these attacks are quite general for a given dataset and not specific to a given model~\cite{adversarialpatch,xiao2021improving}, raising serious concerns about an attacker's ability to generate universal and offline attacks for a given set of data.
 Like with the Pixel attack, the per-pixel distortion is not restricted, so we restricted perturbation to a percentage of the benign image, using the hyper-parameters [.03, .1, .25, .5, 1.0].
-Unlike the aforementioned gradient-based attacks, this method generalises to classification systems that lack gradients (\textit{e.g.}, decision trees).
+Unlike the aforementioned gradient-based attacks, this method generalises to classification systems that lack gradients (\texit{e.g.}, decision trees).
 This differs from the the \textit{Threshold} and \textit{Adversarial Patch} attack below by optimising a single perturbation that works for every image rather than minimising the geometric perturbation distance ($\ell_2$ or $\ell_{\infty}$ norm) while minimising the number of pixels required for said universal patch ($\ell_0$).
 
 \subsubsection{HopSkipJump}
@@ -673,8 +673,8 @@ That is, we can confidently claim that our \textit{true generalization error} ($
 The tested defences each attempt to strategically destroy, smooth, or average data in the original dataset or the output of the model, which results in a loss of precision that makes the benign accuracy worse than the Control (see: Figure~\ref{fig:acc}).
 Furthermore, when we examine the attacks in the right subplot of Figure~\ref{fig:acc}, we see that Deep, HSJ, CW, Pixel, Patch, and Thresh are all able to confuse the model more that half of the time.
 Furthermore, variations in the defence performance (right side of Figures~\ref{fig:mnist_failure_rate}~and~\ref{fig:failure_rate}) raise questions about the ability of these architectures to generalise since things like bit-depth (FSQ), training-noise (Gausss-In), label-noise (Gauss-out), and image resolution (SPS) greatly vary the failure rate.
-In the real-world, effective resolution will change between individuals (e.g.
-a medical scan) or while moving (e.g.
+In the real-world, effective resolution will change between individuals (\texit{e.g.}
+a medical scan) or while moving (\texit{e.g.}
 an autonomous vehicle).
 Even random noise drawn from approximately the same distribution as the training set (Gauss) increases the benign failure rate by an order of magnitude or two (compare the gap between \textit{Gauss} and \textit{Control} in both Fig.~\ref{fig:mnist_failure_rate} and Fig.~\ref{fig:failure_rate}).
 

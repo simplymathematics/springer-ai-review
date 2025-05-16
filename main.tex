@@ -429,7 +429,7 @@ The procedure iterates the step,
 $$
    x^{(s+1)} = \mathrm{Proj}_{\epsilon,x^{(0)}}\Bigg( x^{(s)} + r^{(s)} \frac{\widetilde{\nabla}_{x^{(s)}}  Q(x^{(s)}) }{\big\|\widetilde{\nabla}_{x^{(s)}} Q(x^{(s)}) \big\|_2}\Bigg),
 $$
-where $x^{(s)}$ is an adversarial sample, $s$ a sequence index, $\mathrm{Proj}_{\epsilon,x^{(0)}}$ is an $\ell_2$ projection of a point onto a sphere of radius $\epsilon$, centered at the initial point $x^{(0)}$, and $\widetilde{\nabla}_xQ(x)$ is the Monte Carlo estimate of the gradient of $Q$ at $x$, and
+where $x^{(s)}$ is an adversarial sample, $s$ a sequence index, $\mathrm{Proj}_{\epsilon,x^{(0)}}$ is an $\ell_2$ projection of a point onto a sphere of radius $\epsilon$, centered at the initial point $x^{(0)}$, and $\widetilde{\nabla}_x{Q(x)}$ is the Monte Carlo estimate of the gradient of $Q$ at $x$, and
 $$
     Q(x) = \max_{c\neq c^*} K_c(x) - K_{c^*}(x),
 $$

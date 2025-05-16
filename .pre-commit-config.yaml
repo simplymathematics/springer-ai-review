@@ -20,7 +20,7 @@ repos:
               "main.tex",
               "thesis_main.tex"
             ]
-      # - id: csquotes
+      - id: csquotes
       - id: no-space-in-cite
       - id: tilde-cite
       # - id: unique-labels

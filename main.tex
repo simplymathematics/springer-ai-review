@@ -65,27 +65,27 @@ By testing a combination of attacks and defences, their efficacy, and their run-
 
 \section{Introduction}
 
-Vehicular accidents, medical mistakes, and industrial safety failures are among the leading causes of preventable death around the world~\cite{OECD, makary2016medical, icoh}.
-Technologies like image classification systems have shown to be more accurate than their human counterparts under strict laboratory conditions in these domains~\cite{nhtsa, pakdemirli2019artificial, bernal2017safety++}.
+Vehicular accidents, medical mistakes, and industrial safety failures are among the leading causes of preventable death around the world~\cite{OECD,makary2016medical,icoh}.
+Technologies like image classification systems have shown to be more accurate than their human counterparts under strict laboratory conditions in these domains~\cite{nhtsa,pakdemirli2019artificial,bernal2017safety++}.
 However, prior research has shown that machine learning systems often fail to correctly classify images after small perturbations to the original image.
-While these ``adversarial attacks''~\cite{chakraborty_adversarial_2018, biggio_evasion_2013-1}, define a worst-case scenario for a given data pipeline, imperfect data is a natural result of any sufficiently complex system~\cite{pearson2005mining}.
+While these ``adversarial attacks''~\cite{chakraborty_adversarial_2018,biggio_evasion_2013-1}, define a worst-case scenario for a given data pipeline, imperfect data is a natural result of any sufficiently complex system~\cite{pearson2005mining}.
 In this work, we focus on intentional perturbations to the input space where the goal is to~\emph{evade} a classifier, but similar perturbations are a natural consequence of modern neural network architectures and hardware setups (see Section~\ref{classification}).
-Prior research has shown that proper data sanitation, anomaly detection, and model retraining are effective ways to combat adversarial attacks~\cite{chakraborty_adversarial_2018,  grigorescu2020survey, li_general_2016, wang_security_2019}.
+Prior research has shown that proper data sanitation, anomaly detection, and model retraining are effective ways to combat adversarial attacks~\cite{chakraborty_adversarial_2018,grigorescu2020survey,li_general_2016,wang_security_2019}.
 However, even state of the art defences decrease the accuracy when compared to the un-defended (control) model, suggesting that the actual ability to generalize beyond laboratory test cases has been overestimated in the literature.
-This has been noted before~\cite{ biggio_evasion_2013, carlini_towards_2017, wang_security_2019, li_general_2016} and we confirm it below (see Section~\ref{results}).
-Furthermore, recent research \cite{croce_reliable_2020} has shown that most defences have worse performance against adversaries not tested at the time of publishing, arising from the tendency to only publish the `best' results or better methods and hardware \textit{that become} available to subsequent researchers.
+This has been noted before~\cite{biggio_evasion_2013,carlini_towards_2017,wang_security_2019,li_general_2016} and we confirm it below (see Section~\ref{results}).
+Furthermore, recent research~\cite{croce_reliable_2020} has shown that most defences have worse performance against adversaries not tested at the time of publishing, arising from the tendency to only publish the `best' results or better methods and hardware \textit{that become} available to subsequent researchers.
 
 Further questions about the feasibility of truly `safe' artificial intelligence (AI) have been raised.
 For instance, it has been proven that no matter where we draw our boundary conditions, there exists an attack that will confuse any (non-perfect) discriminator or shift its boundary conditions~\cite{dohmatob_generalized_2019}.
 Additionally, while attacks are always possible on paper, a cost-aware analysis can reveal the feasibility of such attacks in practice.
 It is necessary for any safety-critical system to be robust to these attacks because, as we demonstrate, many classes of attacks are reliable even when we restrict perturbations to a single byte (see Figure~\ref{fig:adv_acc_grid}).
 
-While we are unable to demonstrate safety-critical computer vision models, there is some remaining optimism due to techniques like network pruning~\cite{sehwag2019towards, cosentino2019search, jian2022pruning}, regularization~\cite{ross2018improving, jakubovitz2018improving}, genetically evolved neural network architectures~\cite{sinn2019evolutionary}, and FIRENETS~\cite{colbrook2021can}.
+While we are unable to demonstrate safety-critical computer vision models, there is some remaining optimism due to techniques like network pruning~\cite{sehwag2019towards,cosentino2019search,jian2022pruning}, regularization~\cite{ross2018improving,jakubovitz2018improving}, genetically evolved neural network architectures~\cite{sinn2019evolutionary}, and FIRENETS~\cite{colbrook2021can}.
 However, the efficacy of these models is reported only with test-set accuracy numbers (see Eq.~\ref{eq:accuracy}) that do not reflect the marginal computational cost of the techniques---which is consistently significant.
 In practical, real-time, and/or embedded systems, this is could make the technique unusable.
 Therefore, for a practical analysis, we need a metric that encodes both the change in accuracy and the computational cost of that change.
 Furthermore, the already-existing regulatory requirements for safety-critical electro-mechanical systems (see: Section~\ref{metrics} and Section~\ref{safety-critical}) require such a high degree of precision that traditional error estimation techniques (\eg traditional test-train split methodology) would be impractical to evaluate for every software change, despite that evaluation being a legal necessity (see Section~\ref{metrics} and Section~\ref{safety-critical}).
-Furthermore, in order to estimate the confidence region, one must evaluate the techniques across the set of feasible hyper-parameters--an often neglected practice in the literature which is frequently centered around marginal gains on benchmark data \cite{desislavov2021compute}.
+Furthermore, in order to estimate the confidence region, one must evaluate the techniques across the set of feasible hyper-parameters--an often neglected practice in the literature which is frequently centered around marginal gains on benchmark data~\cite{desislavov2021compute}.
 This should also include any signal pre-processing techniques (see Section~\ref{pre-processing}), any output post-processing techniques (see Section~\ref{post-processing}), and any attacks (see Section~\ref{methods}), as well as the traditional model hyperparameter optimisation.
 
 As such, we evaluated a large suite of proposed attacks and defences in the contexts of accuracy, worst-case failure rate, and computation time.
@@ -105,15 +105,15 @@ Most importantly, by using adversarial attacks to estimate the upper bound of th
 
 \section{Background}
 
-Machine learning, artificial intelligence, and automated data collection are increasingly used in safety-critical applications like autonomous vehicles~\cite{grigorescu2020survey, al2017deep}, medical imaging~\cite{ching2017opportunities, sahiner2019deep}, and industrial control~\cite{fukuda1992theory, monmasson2011fpgas}.
-Convolutional neural networks (CNNs) have demonstrated unparalleled accuracy in image classification tasks; however, CNNs have been shown to be very fragile to adversarial attacks~\cite{miller_adversarial_2020, finlayson2018adversarial}.
+Machine learning, artificial intelligence, and automated data collection are increasingly used in safety-critical applications like autonomous vehicles~\cite{grigorescu2020survey,al2017deep}, medical imaging~\cite{ching2017opportunities,sahiner2019deep}, and industrial control~\cite{fukuda1992theory,monmasson2011fpgas}.
+Convolutional neural networks (CNNs) have demonstrated unparalleled accuracy in image classification tasks; however, CNNs have been shown to be very fragile to adversarial attacks~\cite{miller_adversarial_2020,finlayson2018adversarial}.
 Research points to societal trust in fully automated banking thanks to, among other things, verifiable transactions and guarantees from the issuing institution~\cite{safetyframework}.
-However, when it comes to real-time, safety-critical deep learning, models are rarely reproducible or verifiable~\cite{tsipras_robustness_2019, carlini_towards_2017}.
+However, when it comes to real-time, safety-critical deep learning, models are rarely reproducible or verifiable~\cite{tsipras_robustness_2019,carlini_towards_2017}.
 Despite the drawbacks of deep-learning, modern aviation relies on an array of sensors to make largely automated decisions, relying on a framework of component testing and simulation~\cite{aviation}.
-While similar test suites for adversarial robustness have been proposed~\cite{carlini_towards_2017, chakraborty_adversarial_2018}, they rely on \textit{de facto} accuracy goals rather than a solid theoretical and legal framework.
+While similar test suites for adversarial robustness have been proposed~\cite{carlini_towards_2017,chakraborty_adversarial_2018}, they rely on \textit{de facto} accuracy goals rather than a solid theoretical and legal framework.
 The problems with this are plentiful.
 Historically, marginal gains have relied on exponentially larger models to produce increasingly marginal gains~\cite{desislavov2021compute}.
-These models rely on increasingly larger datasets~\cite{desislavov2021compute, vapnik1994measuring, blumer1989learnability}, which increasingly come from fewer sources~\cite{koch2021reduced}, leading to gender-biased models~\cite{lu2020gender}, racism~\cite{buolamwini2018gender}, and fatal design errors~\cite{banks2018driver} This is a trend that goes back decades~\cite{corsaro1982something, ramirez2000resource, buolamwini2018gender}, leading to, for example, significantly higher fatality in car accidents for female-bodied people~\cite{evans2001gender} or neural networks that unintentionally encode racial information from medical imaging data alone~\cite{gichoya2022ai}.
+These models rely on increasingly larger datasets~\cite{desislavov2021compute,vapnik1994measuring,blumer1989learnability}, which increasingly come from fewer sources~\cite{koch2021reduced}, leading to gender-biased models~\cite{lu2020gender}, racism~\cite{buolamwini2018gender}, and fatal design errors~\cite{banks2018driver} This is a trend that goes back decades~\cite{corsaro1982something,ramirez2000resource,buolamwini2018gender}, leading to, for example, significantly higher fatality in car accidents for female-bodied people~\cite{evans2001gender} or neural networks that unintentionally encode racial information from medical imaging data alone~\cite{gichoya2022ai}.
 Furthermore, data collection can be expensive~\cite{roh2019survey}, raises serious privacy concerns~\cite{bloom2017self}, increases time to market~\cite{lam2004new}, and impedes development speed~\cite{zirger1996effect}.
 Furthermore, research is focused on metrics that tend to be optimistic at best~\cite{madry2017towards}.
 
@@ -123,7 +123,7 @@ In general, an image classification system, $K$, attempts to parse some image in
 Each image is represented as a multi-dimensional array of $n\times m$ pixels, with bit depth $b$ and color depth $c$, such that they are of size $\frac{m \cdot n \cdot b \cdot c}{8}$ bytes.
 When the model is a neural network, the images are passed into a composition of `layers', each layer typically performing an affine transformation followed by a non-linear element-wise transformation (called an activation function).
 The free parameters of such a composition of layers (called an `architecture') are found by minimising a loss function, $L(y,K(x))$, that penalises differences between a true label, $y$, and an estimate, $\hat{y}$.
-When the problem is a multi-class classification, the loss function could, for instance, be the categorical cross-entropy loss~\cite{biggio_evasion_2013, tsipras_robustness_2019, croce_reliable_2020, carlini_towards_2017}.
+When the problem is a multi-class classification, the loss function could, for instance, be the categorical cross-entropy loss~\cite{biggio_evasion_2013,tsipras_robustness_2019,croce_reliable_2020,carlini_towards_2017}.
 
 \paragraph{Adversarial \textit{vs.} Benign}
 
@@ -171,10 +171,10 @@ As we can see, it is rather trivial to shift the classification of a given sampl
 Figure~\ref{fig:shift} depicts a radial basis function support vector machine, classifying the points into orange (class 0) or blue (class 1).
 However, the red points indicate successfully generated adversarial examples.
 Figure~\ref{fig:attack} shows an example of a `7' that has added adversarial noise such that the classifier sees it to be a `9'.
-In related surveys~\cite{dohmatob_generalized_2019, biggio_evasion_2013-1, bect_bayesian_2017, chakraborty_adversarial_2018, carlini_towards_2017, croce_reliable_2020}, a model's adversarial robustness is defined as its performance accuracy against a given adversary.
+In related surveys~\cite{dohmatob_generalized_2019,biggio_evasion_2013-1,bect_bayesian_2017,chakraborty_adversarial_2018,carlini_towards_2017,croce_reliable_2020}, a model's adversarial robustness is defined as its performance accuracy against a given adversary.
 A thorough examination of such attacks are explored in Section~\ref{attacks} below, but, in general, an attacker perturbs an image such that the perturbation distance, $d$, is less than or equal to a threshold value, $\epsilon$, specified by the experimenter, under some conception of distance.
 The evaluations in this study examine both the $\ell_{\infty}$ and $\ell_2$ norms for the gradient-based attacks and $\ell_1$ in other contexts, which consider perturbations no larger than $\epsilon$, where $\ell_{\infty}$ and $\ell_2$ allow for perturbations across the entire feature space, and $\ell_0$ restricts the number of perturbed features.
-In our study, we restrict this perturbation distance to be 1 byte, as is typical in the literature \cite{madry2017towards, miller_adversarial_2020, biggio_evasion_2013, biggio_multiple_2009}.
+In our study, we restrict this perturbation distance to be 1 byte, as is typical in the literature~\cite{madry2017towards,miller_adversarial_2020,biggio_evasion_2013,biggio_multiple_2009}.
 
 \paragraph{Attack Strength}
  Since adversarial perturbations, by definition, are the perturbations that maximises the model loss through various methods, each approximates a different worst-case scenario.
@@ -191,8 +191,8 @@ Below, we outline a wide variety of defences proposed over the last several year
 We have excluded model transformation defences and secondary detection models since those sidestep the problem of making a given model more robust and do nothing for the IEC requirement that each electro-mechanical component meets the regulatory standard in isolation from each other component (see Section~\ref{safety-critical}).
 
 \subsection{Attacker's Knowledge}
- While the general assumption is that an attacker has whitebox access to an entire pipeline (including data, model weights, and output), that does not necessarily need to be the case~\cite{hopskipjump, chakraborty_adversarial_2018}.
-While some attacks do need whitebox access, prior research~\cite{hopskipjump, nelson2010behavior} has shown that a surrogate model and data-set can be used to approximate $K$ using a proxy model $\widehat{K}$, built using the class labels provided by the model at test-time, that is sufficient for creating strong adversarial examples.
+ While the general assumption is that an attacker has whitebox access to an entire pipeline (including data, model weights, and output), that does not necessarily need to be the case~\cite{hopskipjump,chakraborty_adversarial_2018}.
+While some attacks do need whitebox access, prior research~\cite{hopskipjump,nelson2010behavior} has shown that a surrogate model and data-set can be used to approximate $K$ using a proxy model $\widehat{K}$, built using the class labels provided by the model at test-time, that is sufficient for creating strong adversarial examples.
 Tram\`er \textit{et al.}~\cite{tramer2016stealing} examined popular machine learning as a service platforms that return confidence values as well as class labels, showing that an attacker can build a proxy model by querying $ p + 1$ random $p-$dimensional inputs for unknown $p+1$ parameters.
 Further research~\cite{fredrikson_model_2015} was able to reverse engineer the training data-set through black-box attacks against a model that returns confidence levels, with the caveat that the inferred data might be a meta-prototypical example that does not appear in the original dataset.
 
@@ -206,7 +206,7 @@ Below, we examine the efficacy of several attacks from the perspective of loss a
 
 
 \label{metrics}
-The ISO standards \cite{iso26262} define the Safety Inegrity Level (SIL) in failures/per hour, which we have converted to failures per second in Table~\ref{tab:rate}.
+The ISO standards~\cite{iso26262} define the Safety Inegrity Level (SIL) in failures/per hour, which we have converted to failures per second in Table~\ref{tab:rate}.
 If assume that \textit{accidental} adversarial errors are possible in real-world systems due to things like dust, lens flare, component failure, packet loss, \textit{etc.}, it naturally follows that the adversarial failure rate is an estimate of the models behavior at the edge or in the `worst-case scenario'.
 That is, the \textit{adversarial failure rate} is an estimate of the upper bound of the real-world failure rate in adverse but otherwise mundane circumstances.
 
@@ -297,7 +297,7 @@ Like in cryptography, the fundamental limit for an adversary has to do with comp
 For example, model inversion attacks become pointless if it is computationally more expensive to steal a model than it is to train one.
 Likewise, model defences are only as useful insofar as they have the ability to be deployed in existing real-time systems.
 As such, we examine the cost of various defences as well as the number of queries and query rate of various attacks.
-The best modern methods are limited to computationally expensive techniques like reject on negative impact~\cite{nelson2010behavior}, Bayesian subset analysis~\cite{bect_bayesian_2017}, and model post-processing techniques that degrade accuracy with added computational cost~\cite{athalye_obfuscated_2018, papernot, li_general_2016}, making them unsuited for the task of improving our ability to reliably generalise.
+The best modern methods are limited to computationally expensive techniques like reject on negative impact~\cite{nelson2010behavior}, Bayesian subset analysis~\cite{bect_bayesian_2017}, and model post-processing techniques that degrade accuracy with added computational cost~\cite{athalye_obfuscated_2018,papernot,li_general_2016}, making them unsuited for the task of improving our ability to reliably generalise.
 For most attacks, we tested the perfect knowledge scenario, but we have also included the `HopSkipJump' attack~\cite{hopskipjump} to model the worst case for an attacker that only has access to a standard machine learning application programming interfaces (APIs) which only exposes hard class labels.
 
 
@@ -420,7 +420,7 @@ As such, it is considered a \textit{black-box} attack.
 The Adversarial Patch attack~\cite{adversarialpatch} (Patch) uses the same differential evolution algorithm as the Threshold Attack.
 However, instead of optimising for a threshold or confidence level, it seeks to change each class into any other by applying an image patch that is not unique to a given image, but is universal for a  given dataset.
 This single generated image patch is added to each image and is intended to cause a generic misclassification, regardless of the original class.
-We know that these attacks are quite general for a given dataset and not specific to a given model \cite{adversarialpatch, xiao2021improving}, raising serious concerns about an attacker's ability to generate universal and offline attacks for a given set of data.
+We know that these attacks are quite general for a given dataset and not specific to a given model~\cite{adversarialpatch,xiao2021improving}, raising serious concerns about an attacker's ability to generate universal and offline attacks for a given set of data.
 Like with the Pixel attack, the per-pixel distortion is not restricted, so we restricted perturbation to a percentage of the benign image, using the hyper-parameters [.03, .1, .25, .5, 1.0].
 Unlike the aforementioned gradient-based attacks, this method generalises to classification systems that lack gradients (\textit{e.g.}, decision trees).
 This differs from the the \textit{Threshold} and \textit{Adversarial Patch} attack below by optimising a single perturbation that works for every image rather than minimising the geometric perturbation distance ($\ell_2$ or $\ell_{\infty}$ norm) while minimising the number of pixels required for said universal patch ($\ell_0$).
@@ -611,7 +611,7 @@ Both $\beta$ and $\gamma$ were evaluated in a grid search of the set $[.01, 1, 1
 \label{safety-critical}
 
 \subsection{Safety Critical Computer Vision}
-Since the bulk of the literature focuses on image classification systems~\cite{dohmatob_generalized_2019, biggio_evasion_2013-1, bect_bayesian_2017, chakraborty_adversarial_2018, carlini_towards_2017, croce_reliable_2020}, we chose to stress test them in the contexts of autonomous vehicles, medical imaging, and industrial control which are each governed by pre-existing standards across the different domains.
+Since the bulk of the literature focuses on image classification systems~\cite{dohmatob_generalized_2019,biggio_evasion_2013-1,bect_bayesian_2017,chakraborty_adversarial_2018,carlini_towards_2017,croce_reliable_2020}, we chose to stress test them in the contexts of autonomous vehicles, medical imaging, and industrial control which are each governed by pre-existing standards across the different domains.
 Safety-critical software is already widely deployed in other electro-mechanical systems like vehicular braking systems~\cite{braking}, aviation~\cite{aviation}, and medical implants (\eg, pacemakers)~\cite{tuan2010modeling}.
 The International Standards Organization provides a safety-threshold of $10^{-9}$ failures per second for any life-threatening situation~\cite{iso26262} and $10^{-6}$~\cite{iso26262} for any risk of harm, required of any automotive or aviation system governed by ISO~26262~\cite{iso26262}.
 For an autonomous vehicle trying to classify objects on the road, a false negative classification of, for example, a cyclist could lead to death; whereas, a false positive detection of a cyclist would be more likely to cause braking-related injuries that are less severe.
@@ -629,7 +629,7 @@ The limitations of this approach are discussed below in Section~\ref{limitations
 Because of the relatively small run-time requirements of this approach (when compared to testing against massive in-distribution test sets), this method could, for example, act as a unit test in machine learning applications rather than relying on full-system integration tests to evaluate changes to a single model, signal processing technique, data storage format, or API access mechanism.
 It could also be used to highlight error-prone classes or other subsets of data to reduce error or create synthetic samples.
 Furthermore, by isolating changes and testing them as quickly as possible, it's much easier to parse cause and effect when compared to full-system integration tests that could include many changes from many different development teams and require live and potentially dangerous systems (like cars or MRI machines) to effectively test.
-To further increase development velocity, we propose metrics Eq.~\ref{eq:percent_change_acc} and Eq.~\ref{eq:relative_change_failure_rate} as standards for evaluating not only the efficacy of a given change, but as tools to quantify the marginal risk associated with each change, as dictated by the ISO 26262 standard \cite{iso26262}.
+To further increase development velocity, we propose metrics Eq.~\ref{eq:percent_change_acc} and Eq.~\ref{eq:relative_change_failure_rate} as standards for evaluating not only the efficacy of a given change, but as tools to quantify the marginal risk associated with each change, as dictated by the ISO 26262 standard~\cite{iso26262}.
 
 \section{Experimental Methods}
 
@@ -655,12 +655,12 @@ White indicates no change.}
 
 To generate confidence intervals, we varied both defence and attack parameters in an iterative grid search.
 Results across all tests are reported in Figures 4 and 8.
-Initial model weights and model architecture were taken from the survey by Madry et al \cite{madry2017towards}.
+Initial model weights and model architecture were taken from the survey by Madry et al~\cite{madry2017towards}.
 Like in that paper (and commonly throughout the literature), we used the MNIST and CIFAR-10 datasets so that our survey can be directly compared to the wider literature.
 For each experiment, we trained the model for 20 epochs on the entire training set, as defined by the Tensorflow version of the datasets.
 Attacks were given a small computational budget of 10 iterations (100 samples, 10 iterations).
-For pre-processing defences (see: Section \label{preprocessing}), this included data transformations that were distinct from the original training process and for post-processing defences, the model output varied (see: Section V-B2) relative to the survey by Madry et al. \cite{madry2017towards}.
-The MNIST dataset was classified using a simple toy model and the CIFAR-10 dataset was classified using a modified  version of ResNet, both taken from the survey of Madry et al. \cite{madry2017towards}.
+For pre-processing defences (see: Section \label{preprocessing}), this included data transformations that were distinct from the original training process and for post-processing defences, the model output varied (see: Section V-B2) relative to the survey by Madry et al.~\cite{madry2017towards}.
+The MNIST dataset was classified using a simple toy model and the CIFAR-10 dataset was classified using a modified  version of ResNet, both taken from the survey of Madry et al.~\cite{madry2017towards}.
 Model prediction and attack times were measured using Python’s ‘process-time’ due to the timing jitter associated with shared systems and operating system variability.
 The timing resolution was in milliseconds, far below the scale of training times and total attack times, making
 any noise negligible.
@@ -934,7 +934,7 @@ Therefore, because these attacks are not provably optimal, this failure rate sho
 However, it is still a reliable metric for comparing the efficacy of two models as evidenced by the relatively consistent failure rates across various defences and hyperparameter configurations for a given attack (right side of Figures~\ref{fig:mnist_failure_rate}~and~\ref{fig:failure_rate}).
 \subsection{Model Selection}
 In general, we did not choose the model architecture, but relied on two reference models provided by Madry et al.
-They have been tested and cited numerous times \cite{madry2017towards}.
+They have been tested and cited numerous times~\cite{madry2017towards}.
 The point of this work is not to chase state-of-the-art results, but to evaluate robustness-maximizing techniques in a controlled manner while highlighting useful metrics and techniques for doing so.
 At the time of publishing, the authors are not aware of \textit{any} architecture that meets safety critical standards when measured test-set accuracy sense (see~Eq.\ref{eq:accuracy}) and there's no demonstrated technique (to the knowledge of the authors) to reduce this in the adversarial sense without sacrificing accuracy or computational time in the benign case (see~Eq.\ref{eq:failure_rate}, Fig.~\ref{fig:mnist_failure_rate} and Fig.~\ref{fig:failure_rate}).
 So the general conclusion about the real-time safety-critical nature of modern neural networks would remain the same for any other architecture known to the authors.

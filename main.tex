@@ -637,7 +637,7 @@ To further increase development velocity, we propose metrics Eq.~\ref{eq:percent
 In this study, we evaluated the accuracy (see: Sec.~\ref{eq:accuracy}) and the failure rate (see:~Eq.~\ref{eq:failure_rate}) for a variety of attacks (see: Sec.~\ref{attacks}) and defences (see: Sec.~\ref{defences}) using the methods discussed in detail in the previous section.
 In our experiments, we go beyond the in-distribution train/test split typical in machine learning research (Eq.\ref{eq:accuracy}), which only highlights how a model will perform on the data we have already collected, rather than providing guarantees about future performance for the infinite and continuous space that is the real-world.
 For the latter, we measured the worst-case failure rate for a variety of different model defences (see Section~\ref{defences}), using several attacks that define the ‘worst-case’ according to different contexts (see Section~\ref{attacks}).
-We trained one model for each dataset using the ResNet~\cite{resnet} architecture provided by Madry et al.
+We trained one model for each dataset using the ResNet~\cite{resnet} architecture provided by Madry \textit{et al.}
 as part of the ``MNIST''\footnote{\href{https://github.com/MadryLab/mnist_challenge}{https://github.com/MadryLab/mnist\_challenge}} and ``CIFAR-10''\footnote{\href{https://github.com/MadryLab/cifar10_challenge}{https://github.com/MadryLab/cifar10\_challenge}} challenges for each defence across several different hyperparameter combinations.
 
 %% Adv Accuracy Grid
@@ -659,8 +659,8 @@ Initial model weights and model architecture were taken from the survey by Madry
 Like in that paper (and commonly throughout the literature), we used the MNIST and CIFAR-10 datasets so that our survey can be directly compared to the wider literature.
 For each experiment, we trained the model for 20 epochs on the entire training set, as defined by the Tensorflow version of the datasets.
 Attacks were given a small computational budget of 10 iterations (100 samples, 10 iterations).
-For pre-processing defences (see: Section \label{preprocessing}), this included data transformations that were distinct from the original training process and for post-processing defences, the model output varied (see: Section V-B2) relative to the survey by Madry et al.~\cite{madry2017towards}.
-The MNIST dataset was classified using a simple toy model and the CIFAR-10 dataset was classified using a modified  version of ResNet, both taken from the survey of Madry et al.~\cite{madry2017towards}.
+For pre-processing defences (see: Section \label{preprocessing}), this included data transformations that were distinct from the original training process and for post-processing defences, the model output varied (see: Section V-B2) relative to the survey by Madry \textit{et al.}~\cite{madry2017towards}.
+The MNIST dataset was classified using a simple toy model and the CIFAR-10 dataset was classified using a modified  version of ResNet, both taken from the survey of Madry \textit{et al.}~\cite{madry2017towards}.
 Model prediction and attack times were measured using Python’s ‘process-time’ due to the timing jitter associated with shared systems and operating system variability.
 The timing resolution was in milliseconds, far below the scale of training times and total attack times, making
 any noise negligible.
@@ -782,7 +782,7 @@ Due to the universality of this attack against an entire dataset (see Section~\r
 In practice, a quadratic approximation of the boundary (HSJ) is roughly as effective as whitebox models, especially as the number of features scale (compare Figure~\ref{fig:mnist_adv_acc_grid}~and~Figure~\ref{fig:adv_acc_grid}).
 However, there is a clear advantage when the attacker optimises across a large sample of the test set (see \textit{Patch} in Section~\ref{attacks}), with the failure rate tending towards 0 as this sample size increases.
 Furthermore, by simulating a black-box attack (HSJ attack), regularizing generated examples for false confidence (CW attack), finding minimal separating planes (Deep attack),  and using advanced optimisation techniques to generate highly confident false examples (Thresh attack), we were able to consistently fool the models in mere milliseconds per sample.
-The simplest attacks, which Madry et al.~proposed in 2017, remain effective (PGD, FGM).
+The simplest attacks, which Madry \textit{et al.}~proposed in 2017, remain effective (PGD, FGM).
 Furthermore, proper step-size tuning seems to compensate for this simplicity.
 This is evidenced by right side of Figures~\ref{fig:mnist_failure_rate}~and~\ref{fig:failure_rate}, suggesting that the gradient ascent attacks might be a `good enough' estimator of the generalised failure rate, especially given the astronomical gap between current test-set accuracy and regulatory requirements.
 
@@ -933,7 +933,7 @@ In the case of our safety-critical analysis, this \textbf{amplifies} and \textbf
 Therefore, because these attacks are not provably optimal, this failure rate should not be taken as an absolute measure of the true failure rate.
 However, it is still a reliable metric for comparing the efficacy of two models as evidenced by the relatively consistent failure rates across various defences and hyperparameter configurations for a given attack (right side of Figures~\ref{fig:mnist_failure_rate}~and~\ref{fig:failure_rate}).
 \subsection{Model Selection}
-In general, we did not choose the model architecture, but relied on two reference models provided by Madry et al.
+In general, we did not choose the model architecture, but relied on two reference models provided by Madry \textit{et al.}
 They have been tested and cited numerous times~\cite{madry2017towards}.
 The point of this work is not to chase state-of-the-art results, but to evaluate robustness-maximizing techniques in a controlled manner while highlighting useful metrics and techniques for doing so.
 At the time of publishing, the authors are not aware of \textit{any} architecture that meets safety critical standards when measured test-set accuracy sense (see~Eq.\ref{eq:accuracy}) and there's no demonstrated technique (to the knowledge of the authors) to reduce this in the adversarial sense without sacrificing accuracy or computational time in the benign case (see~Eq.\ref{eq:failure_rate}, Fig.~\ref{fig:mnist_failure_rate} and Fig.~\ref{fig:failure_rate}).

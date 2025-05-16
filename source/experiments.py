@@ -2,7 +2,7 @@ from numpy import isin
 from evaluate import *
 from copy import copy
 from scipy.stats import zscore
-import math 
+import math
 from scipy.linalg import svdvals
 from art.config import set_data_path
 from math import ceil
@@ -53,9 +53,9 @@ if __name__ == '__main__':
 	stream_logger.setFormatter(formatter)
 	logger.addHandler(file_logger)
 	logger.addHandler(stream_logger)
-		
+
 	# TODO: Add support for non-default storage
-	
+
 	ART_DATA_PATH= "./models"
 
 	if in_data == 'mnist':
@@ -67,14 +67,14 @@ if __name__ == '__main__':
 		folder = os.path.join(ART_DATA_PATH, 'cifar10/')
 
 	da = load_data(in_data)
-	ART_DATA_PATH = folder 
+	ART_DATA_PATH = folder
 	set_data_path(folder)
 	classifier_model = load_model(path)
 	keras_benign = KerasClassifier( model=classifier_model, use_logits=False)
 
 	data = (in_data, da )
 	defenses = {
-				"Control": None, 
+				"Control": None,
 				"FSQ": FeatureSqueezing(clip_values = [0,255], bit_depth = 4, apply_predict = True, apply_fit = True),
 				"Gauss-In": GaussianAugmentation(sigma = .999, augmentation = False),
 				"SPS-size:2": SpatialSmoothing(window_size = 2),
@@ -88,7 +88,7 @@ if __name__ == '__main__':
 				"Round": Rounded(3),
 				}
 
-	classifier = ("Default Classifier", keras_benign)	  
+	classifier = ("Default Classifier", keras_benign)
 
 	# TODO
 	# Accept arbitrary parameters
@@ -108,7 +108,7 @@ if __name__ == '__main__':
 	defenses = generate_variable_defenses(defenses, betas, 'beta', defense_key = 'Sigmoid')
 	defenses = generate_variable_defenses(defenses, [.001], 'prob', defense_key = 'TVM')
 	defenses = generate_variable_defenses(defenses, [.99], 'cutoff', defense_key = 'Conf')
-	
+
 	logging.info("Number of Defenses "+ str(len(defenses.values())))
 
 	print("Saving to", folder)

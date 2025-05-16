@@ -48,12 +48,12 @@ attacks = {
     "CW-10" : {"name" : [CarliniL2Method], "confidence" : [8, 16, 32, 64, 128, 255], "batch_size" :[10], "max_iter" : [100], 'binary_search_steps': [100], "initial_const" : [100]},
     "CW2-10" : {"name" : [CarliniL2Method], "confidence" : [8, 16, 32, 64, 128, 255], "batch_size" :[10], "max_iter" : [100], 'binary_search_steps': [100],"initial_const" : [100]},
     "CWInf-10" : {"name" : [CarliniLInfMethod], "confidence" : [8, 16, 32, 64, 128, 255], "batch_size" :[10], "max_iter" : [100], 'binary_search_steps': [100], "initial_const" : [100]},
-    "Thresh" : {"name" : [ThresholdAttack], "th": [8, 16, 32, 64, 128, 255], "max_iter" : [1000]}, 
+    "Thresh" : {"name" : [ThresholdAttack], "th": [8, 16, 32, 64, 128, 255], "max_iter" : [1000]},
     "Deep" : {"name" : [DeepFool], "epsilon": [0.001, .01, .1, .3, .5, 1], "batch_size" :[100]},
     "HSJ": {"name" : [HopSkipJump], "max_eval": [10, 30, 50, 80, 100, 1000], "init_eval" : [10], "init_size" : [10]},
     "Patch" : {"name" : [AdversarialPatch], "scale_max" : [.1, .3, .5, .7, .9, 1.0], "scale_min" : [.01]}, #TODO
     "Pixel":  {"name" : [PixelAttack], "th": [1, 2, 4, 8, 16, 32], "max_iter":[10]}, #TODO
-    
+
 }
 
 
@@ -82,7 +82,7 @@ for model_name in models:
         grid = list(ParameterGrid(attacks[key]))
         results[model_name][key] = {} if key not in results[model_name] else results[model_name][key]
         for entry in grid:
-            
+
             entry_without_name = dict(entry)
             entry_without_name.pop("name")
             hash_name = str(hashlib.md5(str(entry_without_name).encode()).hexdigest())

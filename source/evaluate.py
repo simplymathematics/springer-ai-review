@@ -1,6 +1,6 @@
 from multiprocessing.sharedctypes import Value
 import warnings
-import logging 
+import logging
 import tempfile
 from copy import copy
 # warnings.filterwarnings('error', category = RuntimeWarning)
@@ -70,7 +70,7 @@ class Data():
 
     def __hash__(self, other):
         self.id = my_hash(str(vars(self)))
-        return self.id 
+        return self.id
 
 #TODO: Port back to load_dataset in art.utils
 def load_data(data = "mnist"):
@@ -112,7 +112,7 @@ class Experiment():
 
 ##TODO fix always verbose train
     def train(self, data, name, verbose = True, is_fitted = False):
-        if is_fitted == False: 
+        if is_fitted == False:
             start = time()
             from sklearn.model_selection import train_test_split
             try:
@@ -123,7 +123,7 @@ class Experiment():
             try: # Hopefully the data is in the right format
                 self.classifier.fit(data.x_train, data.y_train)
             except TypeError or ValueError as e:
-                self.classifier.fit(data.x_train, to_categorical(data.y_train))       
+                self.classifier.fit(data.x_train, to_categorical(data.y_train))
             self.train_time = time()  - start
             self.classifier_name = name
         else:
@@ -168,9 +168,9 @@ class Experiment():
             self.adv = self.attack.generate(data.x_test[:self.attack_size])
             self.attack_time = time() - start
             logging.info("Attack launched Successfully.")
-        
+
         return self
-        
+
 
     def evaluate(self, data, folder, modes = ['accuracy', 'coverage']):
         folder = os.path.join(folder, 'results/')
@@ -205,7 +205,7 @@ class Experiment():
                 logging.info("Benign recall: " + str(round(self.ben_rec, sig_figs)))
             logging.info("Model evaluated successfully")
             logging.info("Train Time:" + str(round(self.train_time, 2)))
-            
+
 
         if hasattr(self, 'adv') or (hasattr(self, 'adv_pred') and self.adv_pred == np.nan):
             logging.info("Adversarial Predictions for attack: {}.".format(self.attack_name))
@@ -228,7 +228,7 @@ class Experiment():
                 self.adv_rec  = np.mean(recall_score(adv_pred, other[:len(adv_pred)], average = None))
                 logging.info("Adversarial recall: " + str(round(self.adv_rec, sig_figs)))
             logging.info("Attack Time:" + str(round(self.attack_time, 2)))
-            logging.info("Attack evaluated successfully.") 
+            logging.info("Attack evaluated successfully.")
             sig_figs = int(round(log10(self.attack_size), 0))
             logging.info("Significant Figures: " + str(sig_figs))
             logging.info("Adversarial accuracy: " +  str(round(self.adv_acc, sig_figs)))
@@ -265,7 +265,7 @@ def generate_model(data, classifier, defense, def_name, train_size, folder = FOL
         is_fitted = False
     elif 'post' in str(type(defense)):
         cl = KerasClassifier(model = classifier, postprocessing_defences = defense)
-        is_fitted = True 
+        is_fitted = True
     else:
         logging.info("Defense not supported. Try running the function again, using your defended model as the classifier.")
         raise ValueError
@@ -288,7 +288,7 @@ def generate_model(data, classifier, defense, def_name, train_size, folder = FOL
             logging.info("Saving classifier to: "+ model_file)
             with open(model_file, 'wb') as file:
                 pickle.dump(res, file)
-    else: # Train 
+    else: # Train
         res = res.train(datum, name = cl_name, verbose = verbose, is_fitted = is_fitted)
         logging.info("Saving classifier to: "+ model_file)
         with open(model_file, 'wb') as file:
@@ -299,7 +299,7 @@ def generate_model(data, classifier, defense, def_name, train_size, folder = FOL
 
 def generate_attacks(experiment, attack, attack_name, data, attack_sizes = [10], folder = FOLDER, omit = OMIT, verbose = True,  result_file = 'results.csv', **kwargs):
     results = {}
-    i = 0 
+    i = 0
     for attack_size in attack_sizes:
         data_name = data[0]
         datum = data[1]
@@ -340,7 +340,7 @@ def generate_attacks(experiment, attack, attack_name, data, attack_sizes = [10],
             results[experiment.id] = row
             with open(filename, 'wb') as file:
                 pickle.dump(row, file)
-        
+
     return results
 
 def generate_variable_attacks(attacks,  variables, variable_name, attack_key = None, verbose = True):
@@ -350,7 +350,7 @@ def generate_variable_attacks(attacks,  variables, variable_name, attack_key = N
             for variable in variables:
                 attack = copy(base_attack)
                 attack.__dict__[variable_name] = variable
-                new_name = attack_name + "-" + str(variable_name) + ":" + str(variable) 
+                new_name = attack_name + "-" + str(variable_name) + ":" + str(variable)
                 new_attacks.update({new_name : attack})
         else:
             attack = copy(base_attack)
@@ -400,7 +400,7 @@ if __name__ == '__main__':
     stream_logger.setFormatter(formatter)
     logger.addHandler(file_logger)
     logger.addHandler(stream_logger)
-    
+
 
     TRAIN_SIZE = 100
     THRESHOLD = .3
@@ -425,16 +425,16 @@ if __name__ == '__main__':
 
     attacks = {
             'PGD' : ProjectedGradientDescent(keras_classifier, eps=THRESHOLD, norm = 'inf', eps_step = .1, batch_size = BATCH_SIZE, max_iter = MAX_ITER, targeted = False, num_random_init=False, verbose = VERBOSE),
-            'FGM': FastGradientMethod(keras_classifier, eps = THRESHOLD, eps_step = .1, batch_size = BATCH_SIZE), 
-            'Carlini': CarliniL2Method(keras_classifier, verbose = VERBOSE, confidence = .99, max_iter = MAX_ITER, batch_size = BATCH_SIZE), 
-            'DeepFool': DeepFool(classifier = KerasClassifier(model=classifier_model, clip_values = [0,1]), batch_size = BATCH_SIZE, verbose = VERBOSE), 
+            'FGM': FastGradientMethod(keras_classifier, eps = THRESHOLD, eps_step = .1, batch_size = BATCH_SIZE),
+            'Carlini': CarliniL2Method(keras_classifier, verbose = VERBOSE, confidence = .99, max_iter = MAX_ITER, batch_size = BATCH_SIZE),
+            'DeepFool': DeepFool(classifier = KerasClassifier(model=classifier_model, clip_values = [0,1]), batch_size = BATCH_SIZE, verbose = VERBOSE),
             'HopSkipJump': HopSkipJump(keras_classifier, max_iter = MAX_ITER, verbose = VERBOSE),
             'A-PGD' : AutoProjectedGradientDescent(KerasClassifier(model=classifier_model, )),
             'AdversarialPatch': AdversarialPatch(classifier = KerasClassifier(model=classifier_model, clip_values = [0,1]), max_iter = MAX_ITER, verbose = VERBOSE),
             'Threshold Attack': ThresholdAttack(keras_classifier, th = THRESHOLD, verbose = VERBOSE),
-            'PixelAttack': PixelAttack(keras_classifier, th = THRESHOLD, verbose = VERBOSE, es = 1), 
+            'PixelAttack': PixelAttack(keras_classifier, th = THRESHOLD, verbose = VERBOSE, es = 1),
             }
-    defenses = {"No Defense": None, 
+    defenses = {"No Defense": None,
                     "Feature Squeezing": FeatureSqueezing(clip_values = [0,1], bit_depth = 2, apply_predict = True, apply_fit = False),
                     "Gaussian Augmentation": GaussianAugmentation(sigma = .1, apply_predict = True, apply_fit = True, augmentation = False),
                     "Spatial Smoothing": SpatialSmoothing(window_size = 2, apply_predict = True, apply_fit = True),
@@ -455,14 +455,14 @@ if __name__ == '__main__':
     for experiment in experiments.values():
         results = generate_attacks(experiment, attacks, data,  attack_sizes = [1], folder = FOLDER, max_iter = MAX_ITER, batch_size = BATCH_SIZE, threshold = THRESHOLD, verbose = VERBOSE)
         df = append_results(results, folder = FOLDER)
-    
+
 
     # Basic Object testing
-    attack = ProjectedGradientDescent(keras_classifier, eps=.3, eps_step=.1, 
+    attack = ProjectedGradientDescent(keras_classifier, eps=.3, eps_step=.1,
                     max_iter=10, targeted=False, num_random_init=False)
 
 
-    attack2 = ProjectedGradientDescent(keras_classifier, eps=.3, eps_step=.1, 
+    attack2 = ProjectedGradientDescent(keras_classifier, eps=.3, eps_step=.1,
                     max_iter=10, targeted=False, num_random_init=False)
 
     def1 = FeatureSqueezing(clip_values = [0,1], bit_depth = 2, apply_fit = True)
@@ -494,7 +494,7 @@ if __name__ == '__main__':
     assert res1 != res3
     logging.info(my_hash(res1.id))
     assert res1 == res2
-    assert id1 == id2 
+    assert id1 == id2
     logging.info("ALL TESTS PASSED")
     import gc; gc.collect()
     logging.info("Garbage Collected")

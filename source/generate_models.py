@@ -2,7 +2,7 @@ from numpy import isin
 from evaluate import *
 from copy import copy
 from scipy.stats import zscore
-import math 
+import math
 from scipy.linalg import svdvals
 from art.config import set_data_path
 from math import ceil
@@ -61,7 +61,7 @@ if __name__ == '__main__':
 	stream_logger.setFormatter(formatter)
 	logger.addHandler(file_logger)
 	logger.addHandler(stream_logger)
-		
+
 	# TODO: Add support for non-default storage
 	set_data_path("./models/")
 
@@ -79,7 +79,7 @@ if __name__ == '__main__':
 # folder = str(in_data) + '/'
 	classifier_model = load_model(path)
 	keras_benign = KerasClassifier( model=classifier_model, use_logits=False)
-	
+
 	if debug == True:
 		train_sizes = [100]
 		folder = 'debug/' + in_data + "/"
@@ -91,8 +91,8 @@ if __name__ == '__main__':
 	if exists(folder):
 		pass
 	else:
-		mkdir(folder)	
-	
+		mkdir(folder)
+
 
 	data = (in_data, da )
 
@@ -109,7 +109,7 @@ if __name__ == '__main__':
 	else:
 		defense_iter_i = defense_iters
 	defenses = {
-				"Control": None, 
+				"Control": None,
 				"Feature Squeezing": FeatureSqueezing(clip_values = [0,255], bit_depth = defense_bits_i, apply_predict = True, apply_fit = True),
 				"Gaussian Augmentation": GaussianAugmentation(sigma = 1-defense_scale_i, augmentation = False),
 				"Spatial Smoothing2-size:2": SpatialSmoothing(window_size = 2),
@@ -125,14 +125,14 @@ if __name__ == '__main__':
 				"Rounded": Rounded(defense_bits_i),
 				}
 
-	classifier = ("Default Classifier", keras_benign)	  
+	classifier = ("Default Classifier", keras_benign)
 
 	# TODO
 	# Accept arbitrary parameters
 	# Type checking a la 3.7?
 	# bit_depths = [64,  32, 16, 8]
 	defenses = generate_variable_defenses(defenses, defense_bits, 'bit_depth', defense_key = 'Feature Squeezing')
-	
+
 	decimals = [3, 6, 9]
 	defenses = generate_variable_defenses(defenses, decimals, 'decimals', defense_key = 'Rounded')
 
@@ -143,7 +143,7 @@ if __name__ == '__main__':
 	defenses = generate_variable_defenses(defenses, defense_scales_minus, 'gamma', defense_key = 'Reverse Sigmoid')
 	defenses = generate_variable_defenses(defenses, defense_scales, 'prob', defense_key = 'Total Variance Minimization')
 	defenses = generate_variable_defenses(defenses, defense_scales_minus, 'prob', defense_key = 'High Confidence')
-	
+
 
 	#defense_iters = [10, 100, 1000]
 	#Total Variance Minimization

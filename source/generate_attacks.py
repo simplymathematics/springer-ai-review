@@ -46,7 +46,7 @@ if __name__ == '__main__':
 	threshold = args.threshold
 	debug = args.debug
 	step_sizes = args.step_size
-	
+
 	# TODO: Add support for non-default storage
 	set_data_path("./models/")
 	ART_DATA_PATH = "./models"
@@ -85,10 +85,10 @@ if __name__ == '__main__':
 
 	attacks = {
 		'PGD' : ProjectedGradientDescent(keras_benign, eps=threshold, eps_step=.1, batch_size = BATCH_SIZE, max_iter=MAX_ITER, targeted=False, num_random_init=False, verbose = VERBOSE),
-		'FGM': FastGradientMethod(keras_benign, eps = threshold, eps_step = .1, batch_size = BATCH_SIZE), 
-		'Deep': DeepFool(KerasClassifier( model=classifier_model, use_logits=False, clip_values = clip_values), batch_size = BATCH_SIZE, verbose = VERBOSE, max_iter = MAX_ITER), 
+		'FGM': FastGradientMethod(keras_benign, eps = threshold, eps_step = .1, batch_size = BATCH_SIZE),
+		'Deep': DeepFool(KerasClassifier( model=classifier_model, use_logits=False, clip_values = clip_values), batch_size = BATCH_SIZE, verbose = VERBOSE, max_iter = MAX_ITER),
 		'Thresh': ThresholdAttack(KerasClassifier( model=classifier_model, use_logits=False, clip_values = clip_values), th = threshold, verbose = VERBOSE, max_iter = MAX_ITER),
-		'Pixel': PixelAttack(KerasClassifier( model=classifier_model, use_logits=False, clip_values = clip_values), th = 1, verbose = VERBOSE, max_iter = MAX_ITER), 
+		'Pixel': PixelAttack(KerasClassifier( model=classifier_model, use_logits=False, clip_values = clip_values), th = 1, verbose = VERBOSE, max_iter = MAX_ITER),
 		'HSJ': HopSkipJump(keras_benign, max_iter = MAX_ITER, verbose = VERBOSE, init_eval = 10, max_eval = 100),
 		'CW': CarliniLInfMethod(keras_benign, verbose = VERBOSE, confidence =  .99, max_iter = MAX_ITER),
 		'patch_new': AdversarialPatch(KerasClassifier( model=classifier_model, use_logits=False, clip_values = clip_values), max_iter = MAX_ITER, verbose = VERBOSE, scale_min = .03, scale_max = 1.0),
@@ -158,5 +158,4 @@ if __name__ == '__main__':
 			old_name = filename
 			new_name = old_name.replace(".model", ".attacked")
 			os.rename(os.path.join(new_folder, old_name), os.path.join(new_folder, new_name))
-			
-					
+

@@ -1,5 +1,5 @@
 
- 
+
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
 \newtheorem{definition}{Definition}
@@ -46,14 +46,14 @@ Furthermore, recent research \cite{croce_reliable_2020} has shown that most defe
 Further questions about the feasibility of truly `safe' artificial intelligence (AI) have been raised.
 For instance, it has been proven that no matter where we draw our boundary conditions, there exists an attack that will confuse any (non-perfect) discriminator or shift its boundary conditions~\cite{dohmatob_generalized_2019}.
 Additionally, while attacks are always possible on paper, a cost-aware analysis can reveal the feasibility of such attacks in practice.
-It is necessary for any safety-critical system to be robust to these attacks because, as we demonstrate, many classes of attacks are reliable even when we restrict perturbations to a single byte (see Figure~\ref{fig:adv_acc_grid}). 
+It is necessary for any safety-critical system to be robust to these attacks because, as we demonstrate, many classes of attacks are reliable even when we restrict perturbations to a single byte (see Figure~\ref{fig:adv_acc_grid}).
 
 While we are unable to demonstrate safety-critical computer vision models, there is some remaining optimism due to techniques like network pruning~\cite{sehwag2019towards, cosentino2019search, jian2022pruning}, regularization~\cite{ross2018improving, jakubovitz2018improving}, genetically evolved neural network architectures~\cite{sinn2019evolutionary}, and FIRENETS~\cite{colbrook2021can}.
 However, the efficacy of these models is reported only with test-set accuracy numbers (see Eq.~\ref{eq:accuracy}) that do not reflect the marginal computational cost of the techniques---which is consistently significant.
 In practical, real-time, and/or embedded systems, this is could make the technique unusable.
 Therefore, for a practical analysis, we need a metric that encodes both the change in accuracy and the computational cost of that change.
 Furthermore, the already-existing regulatory requirements for safety-critical electro-mechanical systems (see: Section~\ref{metrics} and Section~\ref{safety-critical}) require such a high degree of precision that traditional error estimation techniques (\eg traditional test-train split methodology) would be impractical to evaluate for every software change, despite that evaluation being a legal necessity (see Section~\ref{metrics} and Section~\ref{safety-critical}).
-Furthermore, in order to estimate the confidence region, one must evaluate the techniques across the set of feasible hyper-parameters--an often neglected practice in the literature which is frequently centered around marginal gains on benchmark data \cite{desislavov2021compute}. 
+Furthermore, in order to estimate the confidence region, one must evaluate the techniques across the set of feasible hyper-parameters--an often neglected practice in the literature which is frequently centered around marginal gains on benchmark data \cite{desislavov2021compute}.
 This should also include any signal pre-processing techniques (see Section~\ref{pre-processing}), any output post-processing techniques (see Section~\ref{post-processing}), and any attacks (see Section~\ref{methods}), as well as the traditional model hyperparameter optimisation.
 
 As such, we evaluated a large suite of proposed attacks and defences in the contexts of accuracy, worst-case failure rate, and computation time.
@@ -61,7 +61,7 @@ We show that every model defence configuration reduces the \textit{accuracy} on 
 We show that, even when a particular defence decreases the \textit{failure rate} against a given attack, that that behavior is inconsistent across distance measures and attack types.
 Most importantly, by using adversarial attacks to estimate the upper bound of the failure rate (see Section~\ref{fig:failure_rate}), we conclude that each and every tested configuration fails to meet safety-critical standards by a wide margin.
 
-\subsection{Contributions} 
+\subsection{Contributions}
 \begin{itemize}
     \item We show that even state-of-the-art defences fail to make models that meet safety critical standards even if they tend to marginally improve the failure rate.
     \item We apply time and cost analysis for both the attacks and the defences, something rarely done in the literature.
@@ -91,12 +91,12 @@ In general, an image classification system, $K$, attempts to parse some image in
 Each image is represented as a multi-dimensional array of $n\times m$ pixels, with bit depth $b$ and color depth $c$, such that they are of size $\frac{m \cdot n \cdot b \cdot c}{8}$ bytes.
 When the model is a neural network, the images are passed into a composition of `layers', each layer typically performing an affine transformation followed by a non-linear element-wise transformation (called an activation function).
 The free parameters of such a composition of layers (called an `architecture') are found by minimising a loss function, $L(y,K(x))$, that penalises differences between a true label, $y$, and an estimate, $\hat{y}$.
-When the problem is a multi-class classification, the loss function could, for instance, be the categorical cross-entropy loss~\cite{biggio_evasion_2013, tsipras_robustness_2019, croce_reliable_2020, carlini_towards_2017}. 
+When the problem is a multi-class classification, the loss function could, for instance, be the categorical cross-entropy loss~\cite{biggio_evasion_2013, tsipras_robustness_2019, croce_reliable_2020, carlini_towards_2017}.
 
 \paragraph{Adversarial \textit{vs.} Benign}
 
 The accuracy is measured as either \textit{benign} or \textit{adversarial accuracy}.
-The former refers to the model performance on the original dataset (denoted unperturbed/benign/ben.) and the latter refers to a dataset generated by an attacker crafted to fool the model (denoted perturbed/accelerated/adversarial/adv.). 
+The former refers to the model performance on the original dataset (denoted unperturbed/benign/ben.) and the latter refers to a dataset generated by an attacker crafted to fool the model (denoted perturbed/accelerated/adversarial/adv.).
 In general, electro-industrial safety systems are governed by the International Electrotechnical Commission, IEC~61508~\cite{IEC61508}, and medical software in particular requires continuous failure rate testing adding a massive computational burden to the development phase as governed by IEC~62034~\cite{IEC62034}.
 In general, acceptable risk is expressed as a matrix (see Table~\ref{tab:rate}) where these classes are known in the standard as the safety integrity level (SIL), which then corresponds to different failure modes for components that act on-demand (\eg, medical imaging) or ones that act continuously (\eg, object detection in autonomous cars).
 In general, for safety-critical systems, we aim for SIL levels III or IV, corresponding to failures that lead to injury or death respectively.
@@ -138,17 +138,17 @@ As we can see, it is rather trivial to shift the classification of a given sampl
 
 Figure~\ref{fig:shift} depicts a radial basis function support vector machine, classifying the points into orange (class 0) or blue (class 1).
 However, the red points indicate successfully generated adversarial examples.
-Figure~\ref{fig:attack} shows an example of a `7' that has added adversarial noise such that the classifier sees it to be a `9'. 
+Figure~\ref{fig:attack} shows an example of a `7' that has added adversarial noise such that the classifier sees it to be a `9'.
 In related surveys~\cite{dohmatob_generalized_2019, biggio_evasion_2013-1, bect_bayesian_2017, chakraborty_adversarial_2018, carlini_towards_2017, croce_reliable_2020}, a model's adversarial robustness is defined as its performance accuracy against a given adversary.
 A thorough examination of such attacks are explored in Section~\ref{attacks} below, but, in general, an attacker perturbs an image such that the perturbation distance, $d$, is less than or equal to a threshold value, $\epsilon$, specified by the experimenter, under some conception of distance.
 The evaluations in this study examine both the $\ell_{\infty}$ and $\ell_2$ norms for the gradient-based attacks and $\ell_1$ in other contexts, which consider perturbations no larger than $\epsilon$, where $\ell_{\infty}$ and $\ell_2$ allow for perturbations across the entire feature space, and $\ell_0$ restricts the number of perturbed features.
-In our study, we restrict this perturbation distance to be 1 byte, as is typical in the literature \cite{madry2017towards, miller_adversarial_2020, biggio_evasion_2013, biggio_multiple_2009}. 
+In our study, we restrict this perturbation distance to be 1 byte, as is typical in the literature \cite{madry2017towards, miller_adversarial_2020, biggio_evasion_2013, biggio_multiple_2009}.
 
 \paragraph{Attack Strength}
  Since adversarial perturbations, by definition, are the perturbations that maximises the model loss through various methods, each approximates a different worst-case scenario.
 The `strength' of an attack is generally related to the magnitude of these perturbations~\cite{carlini_towards_2017}, and is measured by retrospective evaluations of model accuracy in which a `strong' attack induces more loss.
 It is necessary to evaluate against the strongest possible attack for a given model and data set, but the strength of an attack is always contextual, since the magnitude of a perturbation must be measured with respect to some normed vector space, is specified in advance, and subject to real-world constraints.
-Additionally, we know that models optimised to prevent one attack do not necessarily generalise to other attacks~\cite{carlini_towards_2017}, especially across distance metrics. 
+Additionally, we know that models optimised to prevent one attack do not necessarily generalise to other attacks~\cite{carlini_towards_2017}, especially across distance metrics.
 
 
 \subsection{defences}
@@ -162,7 +162,7 @@ We have excluded model transformation defences and secondary detection models si
  While the general assumption is that an attacker has whitebox access to an entire pipeline (including data, model weights, and output), that does not necessarily need to be the case~\cite{hopskipjump, chakraborty_adversarial_2018}.
 While some attacks do need whitebox access, prior research~\cite{hopskipjump, nelson2010behavior} has shown that a surrogate model and data-set can be used to approximate $K$ using a proxy model $\widehat{K}$, built using the class labels provided by the model at test-time, that is sufficient for creating strong adversarial examples.
 Tram\`er \textit{et al.}~\cite{tramer2016stealing} examined popular machine learning as a service platforms that return confidence values as well as class labels, showing that an attacker can build a proxy model by querying $ p + 1$ random $p-$dimensional inputs for unknown $p+1$ parameters.
-Further research~\cite{fredrikson_model_2015} was able to reverse engineer the training data-set through black-box attacks against a model that returns confidence levels, with the caveat that the inferred data might be a meta-prototypical example that does not appear in the original dataset. 
+Further research~\cite{fredrikson_model_2015} was able to reverse engineer the training data-set through black-box attacks against a model that returns confidence levels, with the caveat that the inferred data might be a meta-prototypical example that does not appear in the original dataset.
 
 Fortunately for our attacker, such examples are still useful for determining the underlying data distribution, even if they manage to preserve some of the privacy of the original dataset.
 Shokri \textit{et al.}~\cite{shokri2017membership} presented a membership inference attack that determines whether a given data point belongs to the same distribution as the original training data using a set of proxy models.
@@ -176,7 +176,7 @@ Below, we examine the efficacy of several attacks from the perspective of loss a
 \label{metrics}
 The ISO standards \cite{iso26262} define the Safety Inegrity Level (SIL) in failures/per hour, which we have converted to failures per second in Table~\ref{tab:rate}.
 If assume that \textit{accidental} adversarial errors are possible in real-world systems due to things like dust, lens flare, component failure, packet loss, \textit{etc.}, it naturally follows that the adversarial failure rate is an estimate of the models behavior at the edge or in the `worst-case scenario'.
-That is, the \textit{adversarial failure rate} is an estimate of the upper bound of the real-world failure rate in adverse but otherwise mundane circumstances. 
+That is, the \textit{adversarial failure rate} is an estimate of the upper bound of the real-world failure rate in adverse but otherwise mundane circumstances.
 
 
 
@@ -184,7 +184,7 @@ That is, the \textit{adversarial failure rate} is an estimate of the upper bound
 \paragraph{Accuracy}
 
 The accuracy is defined as
-\begin{equation}\label{eq:accuracy} 
+\begin{equation}\label{eq:accuracy}
     \mathrm{Accuracy}
     = 1 - \frac{\mathrm{False~Classifications}}{\mathrm{Total}}
     = 1 - \eta,
@@ -212,7 +212,7 @@ However, due to the large number of samples required by regulatory standards  an
         \end{tabular}
         \label{tab:rate}
     \end{center}
-\end{table} 
+\end{table}
 
 
 \paragraph{Failure Rate}
@@ -225,7 +225,7 @@ Instead of evaluating every software change in our pipeline against the legally 
     \mathrm{Failure~Rate} = \frac{\mathrm{False~Classifications}}{\mathrm{Total ~Time~(s)}}
                           = \lambda,
 \end{equation}
-where \textit{False~Classifications} is the number of misclassified samples, and \textit{Total time} refers to the total time it takes to classify all the samples. 
+where \textit{False~Classifications} is the number of misclassified samples, and \textit{Total time} refers to the total time it takes to classify all the samples.
 
 
 \subsection{Robustness}
@@ -235,7 +235,7 @@ We measure the efficacy of a given model change, using the \textit{Percent Chang
 
 \begin{equation}
     \label{eq:percent_change_acc}
-    \mathrm{\%\Delta ACC = 
+    \mathrm{\%\Delta ACC =
         \frac{Acc.-Control~Acc}{Control~Acc}} \cdot 100
 \end{equation}
 
@@ -245,7 +245,7 @@ We also defined the the metric \textit{Relative Change in Failure Rate ($ \Delta
 
 \begin{equation}
 \label{eq:relative_change_failure_rate}
-\mathrm{\Delta \lambda} = 
+\mathrm{\Delta \lambda} =
     \frac{\mathrm{\lambda_{control}-~\lambda}}{\mathrm{\lambda}}
 \end{equation}
 where $\lambda$ refers to the failure rate, $Control$ refers to the unchanged model.
@@ -279,7 +279,7 @@ For the sake of the reader, a collection of generated adversarial samples follow
 
 The seminal work on adversarial attacks in the context of modern neural networks was written by Madry~et~al.~\cite{madry2017towards} and an important follow up work was written by Carlini~and~Wagner~\cite{carlini_towards_2017}.
 Both operate under the condition that the attacked model has a gradient that is known to the attacker.
-Each of these can be considered \textit{white-box} attacks because they are given access to the model output and the model gradient. 
+Each of these can be considered \textit{white-box} attacks because they are given access to the model output and the model gradient.
 
 
 \subsubsection{FGM}
@@ -293,7 +293,7 @@ where $L$ is the loss function, as described above, $\nabla_{x} L$ is the gradie
 It is called `fast' because it does not check the feasibility of the perturbation (if it is within a maximum distance, $\epsilon$, as is done in other methods, see \eg~PGD below).
 
 As such, it may not be as successful as other methods, but operates very quickly.
-We tested several different step sizes and norms for this method, enumerated in Figures~\ref{fig:adv_acc_grid}~and~\ref{fig:mnist_adv_acc_grid}. 
+We tested several different step sizes and norms for this method, enumerated in Figures~\ref{fig:adv_acc_grid}~and~\ref{fig:mnist_adv_acc_grid}.
 
 \subsubsection{PGD}
 
@@ -305,7 +305,7 @@ $$
 where $r$ is a step size, $s$ is a sequence index, and $x^{(S)}$ denotes a generated adversarial sample after $S$ steps.
 This iteration is repeated until a specified number of iterations, $S$, have been reached.
 The number of iterations is specified by the attacker, which ultimately determines the processing-time against a given model, scaling linearly with the number of iterations.
-We tested several different step sizes and norms for this method, enumerated in Figures~\ref{fig:adv_acc_grid}~\&~\ref{fig:mnist_adv_acc_grid}. 
+We tested several different step sizes and norms for this method, enumerated in Figures~\ref{fig:adv_acc_grid}~\&~\ref{fig:mnist_adv_acc_grid}.
 
 \subsubsection{Carlini--Wagner}
 
@@ -317,7 +317,7 @@ $$
 where the $g_j, g_t$ are discriminant functions and the goal is to minimise the perturbance with a penalty for not changing it to the target class.
 It also generalises beyond the squared $\ell_2$ norm.
 This method attempts to enforce attack quality by penalizing examples with low confidence and continuing to iterate on them until either a maximum number of iterations or the specified false confidence is reached.
-For our tests, we used the $\ell_{\infty}$ norm and a confidence threshold of 99\%. 
+For our tests, we used the $\ell_{\infty}$ norm and a confidence threshold of 99\%.
 
 \subsection{Gradient-Approximating Attacks}
 
@@ -334,9 +334,9 @@ In essence, it seeks to find the minimal separating hyperplane between the targe
 It assumes that it has access to the entirety of the model, including the confidence level (expressed as a logit) of all labels, the true label of a sample ($x$) and the model gradient.
 The iteration scheme is
 $$
-    x^{(s+1)} = \argmin_x \|x^{(s)} - x\|_2 
+    x^{(s+1)} = \argmin_x \|x^{(s)} - x\|_2
 $$
-subject to 
+subject to
 
 $$
 f(x^{(s)}) + \nabla_{x^{(s)}} f(x^{(s)})^T(x^{(s)} - x) = 0,
@@ -347,7 +347,7 @@ The existence of any such attacks with a distance than or equal to some some spe
 
 \subsubsection{Few-Pixel}
 
-The few-pixel attack~\cite{pixelattack} (Pixel) attempts to maximise the loss by iteratively finding the least robust pixel set and perturbing it by less than some specified threshold, $\epsilon$. 
+The few-pixel attack~\cite{pixelattack} (Pixel) attempts to maximise the loss by iteratively finding the least robust pixel set and perturbing it by less than some specified threshold, $\epsilon$.
 That is, this attack seeks to maximise false confidence while minimising the number of perturbed pixels.
 The iteration scheme is
 $$
@@ -370,7 +370,7 @@ $$
 $$
 where $\epsilon$ is the targeted perturbation threshold of .03.
 Unlike the aforementioned gradient-based attacks, this method generalises to classification systems that lack gradients (\textit{e.g.}, decision trees).
-This differs from the the \textit{Few-Pixel} and \textit{Adversarial Patch} attack below by optimising for largest change in loss ($\ell_{1}$ norm) rather than fewest number of pixels ($\ell_{0}$ norm) or the perturbation distance ($\ell_2$ or $\ell_{\infty}$). 
+This differs from the the \textit{Few-Pixel} and \textit{Adversarial Patch} attack below by optimising for largest change in loss ($\ell_{1}$ norm) rather than fewest number of pixels ($\ell_{0}$ norm) or the perturbation distance ($\ell_2$ or $\ell_{\infty}$).
 
 \subsection{Universal Attacks}
 \label{universal}
@@ -379,7 +379,7 @@ Even further work has sought to go beyond computationally-intensive approximatio
 The \textit{Adversarial Patch technique}~\cite{adversarialpatch} uses the aforementioned differential evolution algorithm to generate an additive noise sample that maximises the loss \textbf{for all samples} and is considered a \textit{grey-box} attack because it relies on un-categorized model outputs but not explicit access to the model weights.
 However, we include it here because the nominal image patches generated by this technique are meant to generalise to unseen data as the number of API queries increases, meaning that this can be trained using data wholly disconnected from the model-builder's dataset.
 The \textit{HopSkipJump} attack~\cite{hopskipjump} has been shown to minimise the number of API queries required to break \textbf{any model}.
-As such, it is considered a \textit{black-box} attack. 
+As such, it is considered a \textit{black-box} attack.
 
 
 
@@ -421,7 +421,7 @@ For the sake of clarity different distance metrics are denoted with a distance o
 
 \label{samples}
 \begin{figure*}[]
-    
+
           \includegraphics[,clip,width=0.9\textwidth]{Fig3.pdf}
         \caption{ The Fast Gradient Method (FGM) doesn't enforce any kind of feasibility criteria, resulting in salt-and-pepper noise as the $\ell_2$ approaches the standard deviation of the normally distributed dataset.}
         \label{fig:FGM}
@@ -431,7 +431,7 @@ For the sake of clarity different distance metrics are denoted with a distance o
           \includegraphics[,clip,width=0.9\textwidth]{Fig5.pdf}
         \caption{ The Carlini-Wagner $\ell_{\infty}$ method includes an added confidence constraint that only returns an adversarial example $\iff L(x^{s+1}) - L(x) \geq C$.
 Depicted here is the unperturbed 7 because this method was unable to find an adversarial example for these constraints.
-Despite this, we can see that for 10\% of the samples are consistently misclassified with a high degree of false confidence. 
+Despite this, we can see that for 10\% of the samples are consistently misclassified with a high degree of false confidence.
         }
         \label{fig:CW}
           \includegraphics[,clip,width=0.9\textwidth]{Fig6.pdf}
@@ -441,7 +441,7 @@ Regardless of the distance constraint, DeepFool is very effective.}
  \end{figure*}
 
 
-\begin{figure*}[] 
+\begin{figure*}[]
           \includegraphics[,clip,width=0.9\textwidth]{Fig7.pdf}
         \caption{The Pixel Attack (Pixel) seeks to maximise the loss while minimising the number of perturbed pixels.
 Here we see that even a small  perturbation in original image can lead nevertheless consistently induce failures.
@@ -511,13 +511,13 @@ We tested noise with standard deviations of .9, .99, and .999 on data that was z
 The label smoothing (denoted Label) defence~\cite{label_smoothing} sets a cap on the confidence level for a given model output.
 If the output layer outputs a number higher than this cap, it uniformly distributes the difference across all classes.
 In this way, it obscures the model output, reducing the effective query rate for the attacker.
-In our experiments, we set this threshold to be 99\%,  99.9\%,  or 99.99\% which itself is far below the regulatory standards outlined in Section~\ref{safety-critical}. 
+In our experiments, we set this threshold to be 99\%,  99.9\%,  or 99.99\% which itself is far below the regulatory standards outlined in Section~\ref{safety-critical}.
 
 \subsubsection{Feature Squeezing}
 The feature squeezing (FSQ) method~\cite{feature_squeezing} reduces the bit depth of the input image to a specified value, treated as tunable parameter, which hopefully increases the signal to noise ratio.
 The initial processing time merely requires setting some bits to zero which can be vectorized and parallelized, and scales with image size.
 However, the resulting model can use smaller data-types and potentially operate faster and require less memory.
-We tested bit-depths of 32 and 16 (the control is 64 bit and the images are 8 bit). 
+We tested bit-depths of 32 and 16 (the control is 64 bit and the images are 8 bit).
 
 \subsubsection{Total Variance minimisation}
 Total variation minimisation (TVM) is an image de-noising techniques that dates back decades~\cite{rudin1992nonlinear}.
@@ -550,14 +550,14 @@ While this does make it harder for an attacker to calculate a gradient step, the
 In our experiments, we set this to be equal to 50\%, casting the normal one vs.
 one problem into one vs.
 the sum of the rest, ensuring that the transformed model returns no classification if the confidence of the label does not exceed the total confidence of the other labels.
-To simulate scenarios in which low-confidence classifications are merely ignored (which, in practice, could mitigate an attacker as they generate their attack), we exclude all such samples from the accuracy calculations for this defence. 
+To simulate scenarios in which low-confidence classifications are merely ignored (which, in practice, could mitigate an attacker as they generate their attack), we exclude all such samples from the accuracy calculations for this defence.
 
 \paragraph{Rounded}
 Instead of obscuring the output data with noise or only reporting highly confident answers, this method (Rounded) merely reduces the bit depth of all the reported confidence levels~\cite{discretization}.
 Instead of a 64-bit output vector, this might be reduced to an 8-bit vector reducing the effective attack query rate by a factor of four.
 However, this harms the legitimate user by the same degree by reducing the precision of their queries as well.
 For our study, we used several different numbers of decimals, reflecting the number of base 10 digits in the set $[0,1]$ revealed by the API.
-enumerated in Figures~\ref{fig:adv_acc_grid}~and~\ref{fig:mnist_adv_acc_grid}. 
+enumerated in Figures~\ref{fig:adv_acc_grid}~and~\ref{fig:mnist_adv_acc_grid}.
 
 
 \paragraph{Reverse Sigmoid}
@@ -606,7 +606,7 @@ In this study, we evaluated the accuracy (see: Sec.~\ref{eq:accuracy}) and the f
 In our experiments, we go beyond the in-distribution train/test split typical in machine learning research (Eq.\ref{eq:accuracy}), which only highlights how a model will perform on the data we have already collected, rather than providing guarantees about future performance for the infinite and continuous space that is the real-world.
 For the latter, we measured the worst-case failure rate for a variety of different model defences (see Section~\ref{defences}), using several attacks that define the ‘worst-case’ according to different contexts (see Section~\ref{attacks}).
 We trained one model for each dataset using the ResNet~\cite{resnet} architecture provided by Madry et al.
-as part of the ``MNIST''\footnote{\href{https://github.com/MadryLab/mnist_challenge}{https://github.com/MadryLab/mnist\_challenge}} and ``CIFAR-10''\footnote{\href{https://github.com/MadryLab/cifar10_challenge}{https://github.com/MadryLab/cifar10\_challenge}} challenges for each defence across several different hyperparameter combinations. 
+as part of the ``MNIST''\footnote{\href{https://github.com/MadryLab/mnist_challenge}{https://github.com/MadryLab/mnist\_challenge}} and ``CIFAR-10''\footnote{\href{https://github.com/MadryLab/cifar10_challenge}{https://github.com/MadryLab/cifar10\_challenge}} challenges for each defence across several different hyperparameter combinations.
 
 %% Adv Accuracy Grid
 \begin{figure*}[!ht]
@@ -676,8 +676,8 @@ Furthermore, variations in the defence performance (right side of Figures~\ref{f
 In the real-world, effective resolution will change between individuals (e.g.
 a medical scan) or while moving (e.g.
 an autonomous vehicle).
-Even random noise drawn from approximately the same distribution as the training set (Gauss) increases the benign failure rate by an order of magnitude or two (compare the gap between \textit{Gauss} and \textit{Control} in both Fig.~\ref{fig:mnist_failure_rate} and Fig.~\ref{fig:failure_rate}). 
-    
+Even random noise drawn from approximately the same distribution as the training set (Gauss) increases the benign failure rate by an order of magnitude or two (compare the gap between \textit{Gauss} and \textit{Control} in both Fig.~\ref{fig:mnist_failure_rate} and Fig.~\ref{fig:failure_rate}).
+
 \paragraph{Attacks}
     Figure~\ref{fig:acc} (right subplot) depicts the same confidence region as above, but broken down by attack rather than defence.
 It is obvious that the Deep, HSJ, and Patch reduce the accuracy the most often.
@@ -718,11 +718,11 @@ We see that defences require between 1 and 100 seconds of training per success, 
 However, attacks (see right subplot of Figure~\ref{fig:time}) require as few as several milliseconds per sample in the worst case and $10$ seconds in the best case, with the average attack time falling after around a half second per sample.
 Furthermore, we see that the  Figure~\ref{fig:failure_rate}, we see how various defences manage the trade-off between computational complexity and efficacy by measuring the failure rate as in Equation~\ref{eq:failure_rate}.
 The Confident model had the best accuracy (see: Figure~\ref{fig:acc}) since it merely ignores queries below a certain confidence threshold, but even if we treat that as a null event (instead of a false classification), this increases the failure rate (see: Figure~\ref{fig:failure_rate}) relative to the control since objects were not detected.
- 
+
 
 \paragraph{Failure Rate}
 
-When we combine the information from the accuracy and time graphs in Equation~\ref{eq:failure_rate}, we obtain Figure~\ref{fig:rate_grid}, displaying the failure rate across attacks and defences as well as their individualized performance.  
+When we combine the information from the accuracy and time graphs in Equation~\ref{eq:failure_rate}, we obtain Figure~\ref{fig:rate_grid}, displaying the failure rate across attacks and defences as well as their individualized performance.
 %% Rate
 \begin{figure*}[!hptb]
     {\centering
@@ -830,7 +830,7 @@ Then, when we examine failure rate (Figure~\ref{fig:mnist_failure_rate}), we see
 However, when we break this rate down into each attack and defence combination and measure a change in the failure rate (see: Figure~\ref{fig:mnist_change_grid}), there seems to be a fairly consistent and marginal improvement driven by time (see: Figure~\ref{fig:mnist_time}) rather than accuracy (see:  Figure~\ref{fig:mnist_acc}), as with CIFAR-10.
 When we applied defences to the simpler MNIST model and dataset (when compared to CIFAR-10), we found largely consistent results.
 However, we did find that there were more cases of failed adversarial attacks against MNIST, likely due to the significantly smaller dimensionality of both the dataset and model~\cite{dohmatob_generalized_2019}.
-However, we would expect real-world data to be significantly higher resolution and full-color, unlike the black and white low-resolution images typical of MNIST, so those results probably underestimate the severity of the problem in real-world systems that use multiple multi-pixel RGB cameras to classify objects in real-time. 
+However, we would expect real-world data to be significantly higher resolution and full-color, unlike the black and white low-resolution images typical of MNIST, so those results probably underestimate the severity of the problem in real-world systems that use multiple multi-pixel RGB cameras to classify objects in real-time.
 
 
  %% Fit and pred time across defences and attacks
@@ -888,11 +888,11 @@ This was computed using Equation~\ref{eq:relative_change_failure_rate}.}
 
 \section{Limitations}
 \label{limitations}
-\subsection{True Failure Rate Estimation} 
+\subsection{True Failure Rate Estimation}
 While it is true that real-world noise can inadvertently become adversarial, it is obvious that not every possible noise vector will increase the loss for a given sample.
 We can, however, confidently say that the \textit{true generalization error} lies between the test-set accuracy (Eq.~\ref{eq:accuracy}) and the adversarial failure rate.
 Further work remains regarding the gap between these two estimates, but falls outside the scope of this paper.
-However, as we show in the results (Section~\ref{results}) this fact hardly matters in the context of modern computer vision models, because \textbf{both of these measures} fail to meet safety-critical standards (see Table~\ref{tab:rate}) by many orders of magnitude (see Fig.~\ref{fig:mnist_failure_rate} and Fig.~\ref{fig:failure_rate}.) 
+However, as we show in the results (Section~\ref{results}) this fact hardly matters in the context of modern computer vision models, because \textbf{both of these measures} fail to meet safety-critical standards (see Table~\ref{tab:rate}) by many orders of magnitude (see Fig.~\ref{fig:mnist_failure_rate} and Fig.~\ref{fig:failure_rate}.)
 Furthermore, this kind of estimation is, of course, hardware dependent, but would,  nevertheless, be appropriate for product development.
 
 \subsection{On optimal attacks}
@@ -900,7 +900,7 @@ Additionally, while these attacks are quite efficient, none are provably the fas
 So, \textit{at best}, they \textbf{underestimate} the failure rate.
 In the case of our safety-critical analysis, this \textbf{amplifies} and \textbf{does not diminish} our claims, raising serious concerns about using in-distribution test data as an indicator of real-world performance.
 Therefore, because these attacks are not provably optimal, this failure rate should not be taken as an absolute measure of the true failure rate.
-However, it is still a reliable metric for comparing the efficacy of two models as evidenced by the relatively consistent failure rates across various defences and hyperparameter configurations for a given attack (right side of Figures~\ref{fig:mnist_failure_rate}~and~\ref{fig:failure_rate}). 
+However, it is still a reliable metric for comparing the efficacy of two models as evidenced by the relatively consistent failure rates across various defences and hyperparameter configurations for a given attack (right side of Figures~\ref{fig:mnist_failure_rate}~and~\ref{fig:failure_rate}).
 \subsection{Model Selection}
 In general, we did not choose the model architecture, but relied on two reference models provided by Madry et al.
 They have been tested and cited numerous times \cite{madry2017towards}.
@@ -940,7 +940,7 @@ However, none of these defences reach the regulatory standards required for safe
 Furthermore, any gains seen in the failure rate (Figure~\ref{fig:change_grid}) are inconsistent while universally reducing the accuracy on the original (unperturbed/benign) data (Figure~\ref{fig:adv_acc_grid}).
 Improvements due to the defences are rare and marginal, and they consistently make benign performance worse (see Figures~\ref{fig:adv_acc_grid} and \ref{fig:mnist_adv_acc_grid}).
 We find this to be true across both datasets and model architectures.
-Since we know that model accuracy scales with $\mathcal{O}(1/\sqrt{n})$~\cite{vapnik1994measuring} and attacks seem to run in constant time (see Figures~\ref{fig:time} and \ref{fig:mnist_time}) for a fixed computational and query budgets of a few seconds and 1000 queries respectively. 
+Since we know that model accuracy scales with $\mathcal{O}(1/\sqrt{n})$~\cite{vapnik1994measuring} and attacks seem to run in constant time (see Figures~\ref{fig:time} and \ref{fig:mnist_time}) for a fixed computational and query budgets of a few seconds and 1000 queries respectively.
 
 Finally, due to the rate at which we can generate feasible misclassifications, we must question the real-world efficacy of any system that relies on these models to make predictions that meet the legal standards that define `safe'.
 Despite this pessimism, adversarial model analysis proves to be a computationally efficient way to analyse and compare the out-of-distribution robustness of model architectures without the need to generate massive test sets from real world data.

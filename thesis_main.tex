@@ -31,7 +31,7 @@ By testing a combination of attacks and defences, their efficacy, and their run-
 Vehicular accidents, medical mistakes, and industrial safety failures are among the leading causes of preventable death around the world~\cite{OECD,makary2016medical,icoh}.
 Technologies like image classification systems have shown to be more accurate than their human counterparts under strict laboratory conditions in these domains~\cite{nhtsa,pakdemirli2019artificial,bernal2017safety++}.
 However, prior research has shown that machine learning systems often fail to correctly classify images after small perturbations to the original image.
-While these ``adversarial attacks''~\cite{chakraborty_adversarial_2018,biggio_evasion_2013-1}, define a worst-case scenario for a given data pipeline, imperfect data is a natural result of any sufficiently complex system~\cite{pearson2005mining}.
+While these `adversarial attacks''~\cite{chakraborty_adversarial_2018,biggio_evasion_2013-1}, define a worst-case scenario for a given data pipeline, imperfect data is a natural result of any sufficiently complex system~\cite{pearson2005mining}.
 In this work, we focus on intentional perturbations to the input space where the goal is to~\emph{evade} a classifier, but similar perturbations are a natural consequence of modern neural network architectures and hardware setups (see Section~\ref{classification}).
 Prior research has shown that proper data sanitation, anomaly detection, and model retraining are effective ways to combat adversarial attacks~\cite{chakraborty_adversarial_2018,grigorescu2020survey,li_general_2016,wang_security_2019}.
 However, even state of the art defences decrease the accuracy when compared to the un-defended (control) model, suggesting that the actual ability to generalize beyond laboratory test cases has been overestimated in the literature.
@@ -601,7 +601,7 @@ In this study, we evaluated the accuracy (see: Sec.~\ref{eq:accuracy}) and the f
 In our experiments, we go beyond the in-distribution train/test split typical in machine learning research (Eq.\ref{eq:accuracy}), which only highlights how a model will perform on the data we have already collected, rather than providing guarantees about future performance for the infinite and continuous space that is the real-world.
 For the latter, we measured the worst-case failure rate for a variety of different model defences (see Section~\ref{defences}), using several attacks that define the ‘worst-case’ according to different contexts (see Section~\ref{attacks}).
 We trained one model for each dataset using the ResNet~\cite{resnet} architecture provided by Madry \textit{et al.}
-as part of the ``MNIST''\footnote{\href{https://github.com/MadryLab/mnist_challenge}{https://github.com/MadryLab/mnist\_challenge}} and ``CIFAR-10''\footnote{\href{https://github.com/MadryLab/cifar10_challenge}{https://github.com/MadryLab/cifar10\_challenge}} challenges for each defence across several different hyperparameter combinations.
+as part of the `MNIST''\footnote{\href{https://github.com/MadryLab/mnist_challenge}{https://github.com/MadryLab/mnist\_challenge}} and `CIFAR-10''\footnote{\href{https://github.com/MadryLab/cifar10_challenge}{https://github.com/MadryLab/cifar10\_challenge}} challenges for each defence across several different hyperparameter combinations.
 
 %% Adv Accuracy Grid
 \begin{figure*}[!ht]
@@ -912,7 +912,7 @@ The interesting question, then, isn't necessarily how good of an adversarial sam
 This \textit{worst-case failure rate} will define the feasible upper bound on a target hardware architecture.
 Since these attacks vary substantially in run-time and information requirements, current methods relying on accuracy measures do not distill the efficacy of a given attack or defence from the perspective of any model-builder or attacker with a fixed computational budget.
 However, by controlling for the number of queries and normalizing by CPU-time (see:~Section~\ref{methods}), we are able to isolate the effect of defence techniques against a wide-variety of idealized attackers that optimise for different distance metrics and are subject to very different constraints.
-By no means do we want to minimise the offline possibilities (see:~Section~\ref{universal}) of attacks like ``Adversarial Patch'' and ``Hop Skip Jump''.
+By no means do we want to minimise the offline possibilities (see:~Section~\ref{universal}) of attacks like `Adversarial Patch'' and `Hop Skip Jump''.
 Instead, we seek to highlight the \textbf{computational triviality} of these attacks and raise sincere questions about the safety of these models in general.
 
 \section{Conclusions}

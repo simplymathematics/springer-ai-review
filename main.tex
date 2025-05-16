@@ -266,7 +266,7 @@ We measure the efficacy of a given model change, using the \textit{Percent Chang
         \frac{Acc.-Control~Acc}{Control~Acc}} \cdot 100
 \end{equation}
 
-where $Acc$ refers to the \textit{accuracy} as defined in Eq.~\ref{eq:accuracy} and $Control$ refers to the performance of the unchanged model on the benign ($Ben.$) dataset.
+where $Acc$ refers to the \textit{accuracy} as defined in Eq.~\ref{eq:accuracy} and $Control$ refers to the performance of the unchanged model on the benign ($Ben$) dataset.
 This measures the marginal risk of failure for a particular model change (defence) in the adversarial case when compared to the benign case.
 We also defined the the metric \textit{Relative Change in Failure Rate ($ \Delta \lambda$):}
 
@@ -366,7 +366,7 @@ $$
 subject to
 
 $$
-f(x^{(s)}) + \nabla_{x^{(s)}} f(x^{(s)})^T(x^{(s)} - x) = 0,
+f(x^{(s)}) + \nabla_{x^{(s)}} f{{(x^{(s)})}^T(x^{(s)} - x)} = 0,
 $$
 with $\|\cdot\|_2$ is the $\ell_2$ norm, and where $f$ outputs the logits of $K$, such that $K(x) = \phi(f(x))$, with output activation, $\phi$.
 Run-time is determined largely by the number of iterations, $S$, and the number of gradients $w.r.t.~L(x)$ used to estimate $f(x)$, which we set to 10 such that the gradient was calculated for each class.
@@ -485,7 +485,7 @@ Here, $\epsilon_0$ denotes the ratio of perturbed pixels to the total.}
         \label{fig:Patch}
           \includegraphics[,clip,width=0.9\textwidth]{Fig10.pdf}
         \caption{ The Hop Skip Jump Attack (HSJ) uses a second-order approximation of the classification boundary in an offline manner to find adversarial examples that first maximise loss then minimise for perturbation distance.
-This attack is uniquely concerning because it 1) works on any model and 2) is surprisingly effective even when our attacker is restricted to a small number of queries per batch (here, denoted as $Q$).}
+This attack is uniquely concerning because it 1. works on any model and 2. is surprisingly effective even when our attacker is restricted to a small number of queries per batch (here, denoted as $Q$).}
         \label{fig:HSJ}
 \end{figure*}
 

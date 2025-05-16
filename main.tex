@@ -216,7 +216,7 @@ The accuracy is defined as
     = 1 - \frac{\mathrm{False~Classifications}}{\mathrm{Total}}
     = 1 - \eta,
 \end{equation}
-where \textit{Total} is the number of tested samples, \textit{False Classifications} refers to the number of objects that were incorrectly categorized by a given model[, and $\eta$ is the generalised error rate.
+where \textit{Total} is the number of tested samples, \textit{False Classifications} refers to the number of objects that were incorrectly categorized by a given model, and $\eta$ is the generalised error rate.
 In practice, $\eta$ is generally assumed to be the accuracy on a `test set', with samples from a distribution assumed to be identical to the training set.
 Elsewhere, we refer to this `test set' accuracy as the `benign' accuracy or with the subscript `ben.' such that the test accuracy is $\eta_{ben.}$.
 In addition to this metric, we include metrics for a variety of signal processing techniques (see: Section~\ref{defences}) where the unaltered signal is designated as `control'.
@@ -485,7 +485,7 @@ Here, $\epsilon_0$ denotes the ratio of perturbed pixels to the total.}
         \label{fig:Patch}
           \includegraphics[,clip,width=0.9\textwidth]{Fig10.pdf}
         \caption{ The Hop Skip Jump Attack (HSJ) uses a second-order approximation of the classification boundary in an offline manner to find adversarial examples that first maximise loss then minimise for perturbation distance.
-This attack is uniquely concerning because it 1. works on any model and 2. is surprisingly effective even when our attacker is restricted to a small number of queries per batch (here, denoted as $Q$).}
+This attack is uniquely concerning because it 1.\ works on any model and 2.\ is surprisingly effective even when our attacker is restricted to a small number of queries per batch (here, denoted as $Q$).}
         \label{fig:HSJ}
 \end{figure*}
 

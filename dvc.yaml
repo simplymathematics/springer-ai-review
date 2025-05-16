@@ -1,0 +1,86 @@
+stages:
+
+  pre-commmit:
+    cmd: pre-commit run --all-files  && chktex -q -V main.tex -n 24 -n 8 -n 1 -n 45 -n 17 -n 9 # Suppresses warnings 8 (dash length), 24 (\labels inside floats), and 1 (trailing whitespace following and command)
+    deps:
+      - .pre-commit-config.yaml
+      - main.tex
+      - Fig1.pdf
+      - Fig2.pdf
+      - Fig3.pdf
+      - Fig4.pdf
+      - Fig5.pdf
+      - Fig6.pdf
+      - Fig7.pdf
+      - Fig8.pdf
+      - Fig9.pdf
+      - Fig10.pdf
+      - Fig11.pdf
+      - Fig12.pdf
+      - Fig13.pdf
+      - Fig14.pdf
+      - Fig15.pdf
+      - Fig16.pdf
+      - Fig17.pdf
+      - Fig18.pdf
+      - Fig19.pdf
+      - Fig20.pdf
+      - Fig21.pdf
+      - Fig22.pdf
+  first_run:
+    cmd: pdflatex  main.tex -interaction=nonstopmode -halt-on-error
+    deps:
+      - main.tex
+      - Fig1.pdf
+      - Fig2.pdf
+      - Fig3.pdf
+      - Fig4.pdf
+      - Fig5.pdf
+      - Fig6.pdf
+      - Fig7.pdf
+      - Fig8.pdf
+      - Fig9.pdf
+      - Fig10.pdf
+      - Fig11.pdf
+      - Fig12.pdf
+      - Fig13.pdf
+      - Fig14.pdf
+      - Fig15.pdf
+      - Fig16.pdf
+      - Fig17.pdf
+      - Fig18.pdf
+      - Fig19.pdf
+      - Fig20.pdf
+      - Fig21.pdf
+      - Fig22.pdf
+    outs:
+      - main.aux
+      - main.log
+      - main.out
+  big_run:
+    cmd: pdflatex main.tex && bibtex main && pdflatex  main.tex && pdflatex  main.tex
+    deps:
+      - main.tex
+      - bibliography.bib
+      - main.aux
+      - main.log
+      - main.out
+    outs:
+      - main.bbl
+      - main.blg
+      - main.pdf
+  arxiv:
+    cmd: >-
+      python arxiv.py 
+      --title "Safety-critical computer vision: An empirical survey of adversarial evasion attacks and defences on computer vision systems" 
+      --delete_these_dirs images source 
+      --extensions py yaml lock log csv 
+      --delete_these_files "main.aux" "main.blg" "main.out" "main.pdf"
+      --logfile "main.log"
+    deps:
+      - arxiv.py
+      - main.pdf
+      - main.log
+    outs:
+      - "Safety-critical computer vision: An empirical survey of adversarial evasion attacks and defences on computer vision systems.zip"
+      - arxiv.log

@@ -2,11 +2,11 @@ schema: '2.0'
 stages:
   pre-commmit:
     cmd: pre-commit run --all-files  && chktex -q -V main.tex -n 24 -n 8 -n 1 -n 45
-      -n 17 -n 9
+      -n 17 -n 9 && touch pre_commit.flag
     deps:
     - path: .pre-commit-config.yaml
-      md5: 70ad8e664b749a122b1b3f519d11d148
-      size: 1629
+      md5: 23309ad2fcb1dfab26f99f4be4f50951
+      size: 1627
     - path: Fig1.pdf
       md5: 460bf2f161bc10b5be7aafd3d0078c74
       size: 40419
@@ -74,8 +74,13 @@ stages:
       md5: bbc0629d8b6a34b81e99bcccb9fe331d
       size: 59771
     - path: main.tex
-      md5: ef5bb984e0010f1b94be5fbdc58bcf65
-      size: 94489
+      md5: 917c055d7968bdb312478df47eb73b30
+      size: 94479
+    outs:
+    - path: pre_commit.flag
+      md5: d41d8cd98f00b204e9800998ecf8427e
+      size: 0
+      isexec: true
   first_run:
     cmd: pdflatex  main.tex -interaction=nonstopmode -halt-on-error
     deps:
@@ -146,15 +151,18 @@ stages:
       md5: bbc0629d8b6a34b81e99bcccb9fe331d
       size: 59771
     - path: main.tex
-      md5: ef5bb984e0010f1b94be5fbdc58bcf65
-      size: 94489
+      md5: 917c055d7968bdb312478df47eb73b30
+      size: 94479
+    - path: pre_commit.flag
+      md5: d41d8cd98f00b204e9800998ecf8427e
+      size: 0
     outs:
     - path: main.aux
       md5: d3286574162b0b3992ef9c7f4ee83872
       size: 36136
       isexec: true
     - path: main.log
-      md5: c01009aa635335f3ff01486d1fa06ed0
+      md5: 490f67277cd4b01f546e0c4702c6ee7e
       size: 55126
       isexec: true
     - path: main.out
@@ -172,7 +180,7 @@ stages:
       size: 36136
       isexec: true
     - path: main.log
-      md5: b3fd5e743dd503e852ad9a024ca67fe9
+      md5: 4fd3c5739bc5c0641ca6688609ee6ac7
       size: 28992
       isexec: true
     - path: main.out
@@ -180,8 +188,8 @@ stages:
       size: 7145
       isexec: true
     - path: main.tex
-      md5: ef5bb984e0010f1b94be5fbdc58bcf65
-      size: 94489
+      md5: 917c055d7968bdb312478df47eb73b30
+      size: 94479
     outs:
     - path: main.bbl
       md5: da237c2028ee8d8bc5fe6f0c0737debc
@@ -192,8 +200,8 @@ stages:
       size: 929
       isexec: true
     - path: main.pdf
-      md5: 1b7ef4a85daf2190776c6a8d84a7206a
-      size: 1661354
+      md5: 2766b7d7d08df57881ce5d46d5a87326
+      size: 1661026
       isexec: true
   arxiv:
     cmd: 'python arxiv.py  --title "Safety-critical computer vision: An empirical
@@ -205,18 +213,18 @@ stages:
       md5: 1ddb1fe52c9217b71bf3ec6e917d443f
       size: 7804
     - path: main.log
-      md5: b3fd5e743dd503e852ad9a024ca67fe9
+      md5: 4fd3c5739bc5c0641ca6688609ee6ac7
       size: 28992
     - path: main.pdf
-      md5: 1b7ef4a85daf2190776c6a8d84a7206a
-      size: 1661354
+      md5: 2766b7d7d08df57881ce5d46d5a87326
+      size: 1661026
     outs:
     - path: 'Safety-critical computer vision: An empirical survey of adversarial evasion
         attacks and defences on computer vision systems.zip'
-      md5: ba38d50539ad846787846e16f923b9f0
-      size: 6265308
+      md5: 410e79efd804079fe067fed53cada548
+      size: 6265396
       isexec: true
     - path: arxiv.log
-      md5: f989ea31119ddcfd9c91a26fe1f126b5
+      md5: 9a586a130ba46854dbec5e3f95ea30ed
       size: 1486
       isexec: true

@@ -6,4 +6,4 @@
 /main.pdf
 /main.blg
 /arxiv.log
-/pre_commit.flag
+*.flag

@@ -13,15 +13,15 @@ jobs:
       - name: Upload PDF file
         uses: actions/upload-artifact@v4
         with:
-          name: survey.pdf
+          name: main.pdf
           path: main.pdf
           overwrite: true      
       - name: Create www directory and html file
         run: |
           mkdir -p www
-          echo '<html><body><h1>Survey</h1><iframe src="survey.pdf" width="100%" height="100%"></iframe></body></html>' > www/index.html
+          echo '<html><body><iframe src="main.pdf" width="100%" height="100%"></iframe></body></html>' > www/index.html
       - name: Copy to www
-        run: cp main.pdf www/survey.pdf
+        run: cp main.pdf www/main.pdf
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:

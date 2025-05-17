@@ -10,15 +10,12 @@ jobs:
         uses: xu-cheng/latex-action@master
         with:
           root_file: main.tex
-        continue-on-error: true
       - name: Upload PDF file
         uses: actions/upload-artifact@v4
         with:
           name: survey.pdf
           path: main.pdf
-          overwrite: true
-        continue-on-error: true
-      
+          overwrite: true      
       - name: Create www directory and html file
         run: |
           mkdir -p www
@@ -27,7 +24,6 @@ jobs:
         run: cp main.pdf www/survey.pdf
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
-        continue-on-error: true
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./www

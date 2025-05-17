@@ -18,10 +18,13 @@ jobs:
           path: main.pdf
           overwrite: true
         continue-on-error: true
-      - name: Copy to www
+      
+      - name: Create www directory and html file
         run: |
           mkdir -p www
-          cp main.pdf www/survey.pdf
+          echo '<html><body><h1>Survey</h1><iframe src="survey.pdf" width="100%" height="100%"></iframe></body></html>' > www/index.html
+      - name: Copy to www
+        run: cp main.pdf www/survey.pdf
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         continue-on-error: true

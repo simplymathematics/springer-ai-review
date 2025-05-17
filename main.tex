@@ -694,7 +694,7 @@ We can plainly see that some techniques fool every model nearly every time while
 Since no tested configuration reliably exceeded the \textit{benign accuracy}, this metric seems to only indicate a lower bound of the generalization error while the \textit{adversarial failure rate} estimates the upper bound (see Section~\ref{metrics}).
 That is, we can confidently claim that our \textit{true generalization error} ($\eta$) falls somewhere between $10^{-4}$ failures per second (roughly indicated by the 99.96 \% test-set, benign accuracy for MNIST or 99.83\% accuracy for CIFAR10) and the worst-case adversarial failure rate  (roughly $10^{-1}$ for MNIST and $10^{2}$ for CIFAR-10), which obviously falls below the safety-critical standards (see Table~\ref{tab:rate}) by huge margins, indicating that neither architecture is safety-critical (see: Section~\ref{safety-critical}).
 
-\paragraph{defences}
+\paragraph{Defences}
     In Figure~\ref{fig:acc} we see that, for every defence (left subplot), that adversarial accuracy is lower than benign accuracy, adding more empirical evidence the accuracy \textit{vs.}~robustness trade-off discussed widely in the literature (\textit{e.g.} there robustness and accuracy are at odds with each other).
 The tested defences each attempt to strategically destroy, smooth, or average data in the original dataset or the output of the model, which results in a loss of precision that makes the benign accuracy worse than the Control (see: Figure~\ref{fig:acc}).
 Furthermore, when we examine the attacks in the right subplot of Figure~\ref{fig:acc}, we see that Deep, HSJ, CW, Pixel, Patch, and Thresh are all able to confuse the model more that half of the time.

@@ -48,7 +48,7 @@
 Considering the growing prominence of production-level AI and the threat of adversarial attacks that can poison a machine learning model against a certain label, evade classification, or reveal sensitive data about the model and training data to an attacker, adversaries pose fundamental problems to machine learning systems.
 Furthermore, much research has focused on the inverse relationship between robustness and accuracy, raising problems for real-time and safety-critical systems particularly since they are governed by legal constraints in which software changes must be explainable and every change must be thoroughly tested.
 While many defences have been proposed, they are often computationally expensive and tend to reduce model accuracy.
-We have therefore conducted a large survey of attacks and defences and present a simple and practical framework for analyzing any machine-learning system from a safety-critical perspective using adversarial noise to find the upper bound of the failure rate.
+We have therefore conducted a large survey of attacks and defences and present a simple and practical framework for analysing any machine-learning system from a safety-critical perspective using adversarial noise to find the upper bound of the failure rate.
 Using this method, we conclude that all tested configurations of the ResNet architecture fail to meet any reasonable definition of `safety-critical' when tested on even small-scale benchmark data.
 We examine state of the art defences and attacks against computer vision systems with a focus on safety-critical applications in autonomous driving, industrial control, and healthcare.
 By testing a combination of attacks and defences, their efficacy, and their run-time requirements, we provide substantial empirical evidence that modern neural networks consistently fail to meet established safety-critical standards by a wide margin.
@@ -80,12 +80,12 @@ However, the efficacy of these models is reported only with test-set accuracy nu
 In practical, real-time, and/or embedded systems, this is could make the technique unusable.
 Therefore, for a practical analysis, we need a metric that encodes both the change in accuracy and the computational cost of that change.
 Furthermore, the already-existing regulatory requirements for safety-critical electro-mechanical systems (see: Section~\ref{metrics} and Section~\ref{safety-critical}) require such a high degree of precision that traditional error estimation techniques (\textit{e.g.}, traditional test-train split methodology) would be impractical to evaluate for every software change, despite that evaluation being a legal necessity (see Section~\ref{metrics} and Section~\ref{safety-critical}).
-Furthermore, in order to estimate the confidence region, one must evaluate the techniques across the set of feasible hyper-parameters--an often neglected practice in the literature which is frequently centered around marginal gains on benchmark data~\cite{desislavov2021compute}.
+Furthermore, in order to estimate the confidence region, one must evaluate the techniques across the set of feasible hyper-parameters--an often neglected practice in the literature which is frequently centred around marginal gains on benchmark data~\cite{desislavov2021compute}.
 This should also include any signal pre-processing techniques (see Section~\ref{pre-processing}), any output post-processing techniques (see Section~\ref{post-processing}), and any attacks (see Section~\ref{methods}), as well as the traditional model hyperparameter optimisation.
 
 As such, we evaluated a large suite of proposed attacks and defences in the contexts of accuracy, worst-case failure rate, and computation time.
 We show that every model defence configuration reduces the \textit{accuracy} on benign (unperturbed) data.
-We show that, even when a particular defence decreases the \textit{failure rate} against a given attack, that that behavior is inconsistent across distance measures and attack types.
+We show that, even when a particular defence decreases the \textit{failure rate} against a given attack, that that behaviour is inconsistent across distance measures and attack types.
 Most importantly, by using adversarial attacks to estimate the upper bound of the failure rate (see Section~\ref{fig:failure_rate}), we conclude that each and every tested configuration fails to meet safety-critical standards by a wide margin.
 
 \subsection{Contributions}
